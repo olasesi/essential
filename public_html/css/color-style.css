@@ -1,0 +1,171 @@
+/********************************************  ************************************/
+a:hover {
+    color: #e96ba8;
+}
+
+/***************************************************** Header Part**********************************************************/
+.header .header__top {
+    background-color: #f9f9f9;
+}
+
+/*****************************************************The Mobile  ****************************************/
+.header--mobile{
+    background-color: #f9f9f9;
+}
+
+.header--mobile.header--sticky .navigation--mobile {
+    background-color: #f9f9f9;
+}
+
+.navigation {
+    background-color: #ec268f;
+}
+
+
+/*****************************************************The Search Box ***************************************/
+.ps-form--quick-search button,
+.ps-form--search-mobile button {
+    background-color: #ec268f;
+    color: #ffffff;
+}
+
+/************************************************Icon ******************************************************/
+.ps-block--user-header i, 
+.ps-block--site-features .ps-block__left i{
+    color: #ec268f;
+}
+
+/************************************************For text color in the tab view in the header************************************************************/
+.header__left p{
+    color: #ffffff;
+}
+
+
+/*For shop by category dropdown menu*/
+.menu--dropdown > li:hover {
+    background-color: #ec268f;
+}
+/********************************************* Footer Part****************************************************/
+.ps-footer {
+    background-color: #f9f9f9;    
+}
+
+.widget_contact-us .widget_content h3 {
+    color: #e96ba8;
+
+}
+
+.back2top:hover {
+    cursor: pointer;
+    background-color: #e96ba8;
+    border-color: #e96ba8;
+  }
+
+/************************************************************ Sidebar header in Mobile menu*****************************************/
+.ps-panel--sidebar .ps-panel__header {
+    background-color: #e96ba8;
+}
+
+/*******************************************************Mobile view for menu*****************************************************************/
+.navigation--list .navigation__item.active i,
+.navigation--list .navigation__item.active span {
+    color: #e96ba8;
+}
+
+/************************************************************For button generally*************************************************************************/
+.ps-btn {
+    background-color: #e96ba8;
+}
+
+.ps-btn:hover,
+.pagination li > a:hover{
+    background-color: #ec268f;
+    color: #fff;
+}
+/******************************************************Login btn ***********************************************************/
+button.ps-btn {
+    background-color: #e96ba8;
+}
+
+button.ps-btn:hover,
+.ps-carousel--responsive .owl-dots .owl-dot.active{
+    background-color: #ec268f;
+}
+
+/*********************************************Admin Login form moving up ******************************************************/
+
+.ps-form--account {
+    padding-top: 30px;
+}
+
+.form-control:focus {
+    border-color: #e96ba8;
+}
+
+/******************************************************** Slider banner sidebar *************************************************************************/
+.ps-widget--account-dashboard .ps-widget__content ul li.active,
+.ps-widget--account-dashboard .ps-widget__content ul li a:hover {
+    background-color: #e96ba8;
+}
+
+
+
+/*******************************************************Product Category***************************************************/
+.ps-product-list .ps-section__links li a:hover {
+    color: #e96ba8;
+}
+
+
+/* **************************************************************Shopping Cart************************************************************/
+.header .header__extra span,
+.mobile-cart{
+     background-color: #e96ba8;
+}
+
+.ps-cart--mini.box a:hover{
+     color: #ec268f !important;
+}
+
+.ps-product .ps-product__actions li a:hover {
+    background-color: #e96ba8;
+}
+
+.ps-btn, button.ps-btn {
+    color: #fff;
+}
+
+.ps-shopping-cart .ps-section__cart-actions .ps-btn--outline,
+.ps-shopping-cart .ps-section__footer .ps-btn--outline {
+    border-color: #e96ba8;
+    color: #fff;
+}
+
+.ps-shopping-cart .ps-section__cart-actions .ps-btn--outline:hover,
+.ps-shopping-cart .ps-section__footer .ps-btn--outline:hover {
+    background-color: #ec268f;
+    border-color: #ec268f;
+}
+
+.ps-shopping-cart .ps-section__footer .ps-btn--outline:hover {
+    color: #ffffff;
+}
+
+
+.ps-checkbox label:before {
+    border: 1px solid #e96ba8;
+}
+
+.ps-checkbox input[type=checkbox]:checked ~ label:before {
+    background-color: #e96ba8;
+    border-color: #e96ba8;
+}
+
+.ps-product--cart-mobile .ps-product__content a:hover,
+.ps-product--cart .ps-product__content a:hover{
+    color: #ec268f;
+}
+
+.mega-menu .mega-menu__list li a:hover {
+    color: #e96ba8;
+}
+

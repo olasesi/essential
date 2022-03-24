@@ -1,0 +1,20 @@
+[17-Mar-2022 17:43:51 UTC] PHP Warning:  mysqli_connect(): (HY000/2013): Lost connection to MySQL server at 'reading initial communication packet', system error: 104 in /home2/tracybr1/incs-template1/config.php on line 79
+[18-Mar-2022 21:06:08 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'tracybr1_betasouk'@'localhost' (using password: YES) in /home2/tracybr1/incs-template1/config.php on line 79
+[18-Mar-2022 21:06:39 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'tracybr1_betasouk'@'localhost' (using password: YES) in /home2/tracybr1/incs-template1/config.php on line 79
+[18-Mar-2022 21:07:11 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'tracybr1_betasouk'@'localhost' (using password: YES) in /home2/tracybr1/incs-template1/config.php on line 79
+[18-Mar-2022 21:08:26 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'tracybr1_betasouk'@'localhost' (using password: YES) in /home2/tracybr1/incs-template1/config.php on line 79
+[18-Mar-2022 21:08:34 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'tracybr1_betasouk'@'localhost' (using password: YES) in /home2/tracybr1/incs-template1/config.php on line 79
+[18-Mar-2022 21:09:13 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'tracybr1_betasouk'@'localhost' (using password: YES) in /home2/tracybr1/incs-template1/config.php on line 79
+[18-Mar-2022 21:09:25 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'tracybr1_betasouk'@'localhost' (using password: YES) in /home2/tracybr1/incs-template1/config.php on line 79
+[18-Mar-2022 21:09:28 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'tracybr1_betasouk'@'localhost' (using password: YES) in /home2/tracybr1/incs-template1/config.php on line 79
+[18-Mar-2022 21:09:53 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'tracybr1_betasouk'@'localhost' (using password: YES) in /home2/tracybr1/incs-template1/config.php on line 79
+[18-Mar-2022 21:20:44 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'tracybr1_betasouk'@'localhost' (using password: YES) in /home2/tracybr1/incs-template1/config.php on line 79
+[18-Mar-2022 21:20:46 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'tracybr1_betasouk'@'localhost' (using password: YES) in /home2/tracybr1/incs-template1/config.php on line 79
+[18-Mar-2022 21:23:29 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'tracybr1_betasouk'@'localhost' (using password: YES) in /home2/tracybr1/incs-template1/config.php on line 79
+[18-Mar-2022 21:23:34 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'tracybr1_betasouk'@'localhost' (using password: YES) in /home2/tracybr1/incs-template1/config.php on line 79
+[18-Mar-2022 21:23:36 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'tracybr1_betasouk'@'localhost' (using password: YES) in /home2/tracybr1/incs-template1/config.php on line 79
+[18-Mar-2022 21:23:42 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'tracybr1_betasouk'@'localhost' (using password: YES) in /home2/tracybr1/incs-template1/config.php on line 79
+[18-Mar-2022 21:23:44 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'tracybr1_betasouk'@'localhost' (using password: YES) in /home2/tracybr1/incs-template1/config.php on line 79
+[18-Mar-2022 21:23:56 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'tracybr1_betasouk'@'localhost' (using password: YES) in /home2/tracybr1/incs-template1/config.php on line 79
+[19-Mar-2022 00:36:50 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'tracybr1_betasouk'@'localhost' (using password: YES) in /home2/tracybr1/incs-template1/config.php on line 79
+[19-Mar-2022 00:38:04 UTC] PHP Warning:  mysqli_connect(): (28000/1045): Access denied for user 'tracybr1_betasouk'@'localhost' (using password: YES) in /home2/tracybr1/incs-template1/config.php on line 79
