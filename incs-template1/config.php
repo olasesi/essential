@@ -4,7 +4,7 @@ session_start();
 
 
 //Website name without www and .com
-$website_name = "tracybridals.com.ng";
+$website_name = "localhost:88/essential/public_html";
 //first eight characters of website name and end with underscore
 $website_name_part ="mspcolle_";
 //Website name without www and .com and words spaced
@@ -52,7 +52,7 @@ $LOGO_IMG_FILENAME = "";
 //cover image filename
 $CAROUSEL_IMAGE_FILENAME = "2.jpg";		//870px x 431px
 //Password
-$pass_word = "Mxs@2Wxh5Q.9";
+$pass_word = "";
 		
 
 
@@ -76,12 +76,12 @@ define("db_conn_error","<div>
 
 //$website_name_part.'admin'------>username
 //$website_name_part.'admin'------>database
-$connect = mysqli_connect('localhost','tracybr1_betasouk',$pass_word,'tracybr1_betasouk') or die(db_conn_error);		
+$connect = mysqli_connect('localhost','root',$pass_word,'tracybr1_betasouk') or die(db_conn_error);		
 $data_select = mysqli_select_db($connect,'tracybr1_betasouk') or die(db_conn_error);
 
 
 
-define("GEN_WEBSITE","https://".$website_name);      //Enter your website name eg www.designsbyblocks.com.ng.
+define("GEN_WEBSITE","http://".$website_name);      //Enter your website name eg www.designsbyblocks.com.ng.
 define("SITE_NAME_NO_WWW", $website_name_with_spaces); //Enter the name of your website logo eg designs by blocks.
 define("TITLE", $website_name_with_spaces);            //Enter your website title eg welcome to designs by blocks.
 

@@ -52,6 +52,21 @@ echo'
 
 <body class="loaded">
 
+    <?php 
+        $num_top_banner = mysqli_query($connect, "SELECT top_banner_image, top_banner_name FROM top_banner") or die(db_conn_error);
+       
+        while($topBannerFetch = mysqli_fetch_array($num_top_banner)){
+            echo ('
+    
+                <div class="ps-promotion-kids">
+                    <div class="container">
+                        <img src="'.GEN_WEBSITE.'/images/top-banner/'.$topBannerFetch['top_banner_image'].'" alt="'.$topBannerFetch['top_banner_name'].'" height="60px" width="1200px"></a></div>
+                </div>
+            
+            ');
+        }
+
+    ?>
 
 
     <header class="header header--1" data-sticky="true">
