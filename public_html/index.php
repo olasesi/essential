@@ -18,21 +18,21 @@ include ('../incs-template1/header.php'); ?>
         <div class="ps-container">
             <div class="ps-section__left">
             <?php
-if(isset($_SESSION['user_id'])){
-   echo  '<small>slider banners (1230x425)px</small>';
-}
-   ?>
+                if(isset($_SESSION['user_id'])){
+                echo  '<small>slider banners (1230x425)px</small>';
+                }
+                ?>
                 <div class="ps-carousel--nav-inside owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="5000" data-owl-gap="0" data-owl-nav="true" data-owl-dots="true" data-owl-item="1" data-owl-item-xs="1" data-owl-item-sm="1" data-owl-item-md="1"
                     data-owl-item-lg="1" data-owl-duration="1000" data-owl-mousedrag="on" data-owl-animate-in="fadeIn" data-owl-animate-out="fadeOut">
                    <?php
                    	$query_slider_banner_select =  mysqli_query($connect, "SELECT slider_banner_image FROM slider_banner ORDER BY slider_id ASC LIMIT 3") or die(db_conn_error);
 
                    while($looping_slider=mysqli_fetch_array($query_slider_banner_select)){
-            echo ' <div class="ps-banner bg--cover" data-background="images/sliders/'.$looping_slider['slider_banner_image'].'">
-                <a class="ps-banner__overlay" ></a>
-                    </div>';
+                    echo ' <div class="ps-banner bg--cover" data-background="images/sliders/'.$looping_slider['slider_banner_image'].'">
+                                <a class="ps-banner__overlay" ></a>
+                            </div>';
 
-                   }
+                    }
 
                   
                    ?>
