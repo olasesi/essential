@@ -10,8 +10,10 @@ if(isset($_SESSION['user_id'])){
 <a href="products-categories.php"><button type="button" class="btn btn-info btn-lg">Products categories</button></a>
 
 <div class="btn-group" >
-  <a class="btn btn-secondary btn-lg" type="button">
-    Small split button
+  <a href="banners.php">
+    <button class="btn btn-secondary btn-lg" type="button">
+      Small split button
+    </button>
   </a>
   <button type="button" class="btn btn-lg btn-secondary dropdown-toggle  dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="visually-hidden"></span>

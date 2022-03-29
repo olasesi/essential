@@ -111,7 +111,7 @@ if(isset($_SESSION['user_id'])){
 
 
     <?php
-        $select_products3 = mysqli_query($connect,"SELECT * FROM products WHERE products_deals = 'Deals of the day' ORDER BY products_id DESC LIMIT 12" ) or die(db_conn_error);
+        $select_products3 = mysqli_query($connect,"SELECT * FROM products, inventory WHERE products_deals = 'Deals of the day' AND products_id = inventory_product_id ORDER BY products_id DESC LIMIT 12" ) or die(db_conn_error);
 
         if (mysqli_num_rows($select_products3) != 0) {
 
@@ -138,14 +138,14 @@ if(isset($_SESSION['user_id'])){
                     </div>
                 </div>
                 <div class="ps-section__content">
-                <div class="ps-carousel--responsive owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="10000" data-owl-gap="0" data-owl-nav="false" data-owl-dots="true" data-owl-item="7" data-owl-item-xs="2" data-owl-item-sm="2" data-owl-item-md="2" data-owl-item-lg="4" data-owl-item-xl="6" data-owl-duration="1000" data-owl-mousedrag="on">';
+                <div class="ps-carousel--nav owl-slider" data-owl-auto="true" data-owl-loop="true" data-owl-speed="10000" data-owl-gap="30" data-owl-nav="true" data-owl-dots="true" data-owl-item="7" data-owl-item-xs="2" data-owl-item-sm="2" data-owl-item-md="2" data-owl-item-lg="4" data-owl-item-xl="6" data-owl-duration="1000" data-owl-mousedrag="on">';
                         
                         
 
                 while($rows_loop = mysqli_fetch_array($select_products3)){
 
                 echo '
-                <div class="ps-product">
+                <div class="ps-product ps-product--inner">
 
 
                 <div class="ps-product__thumbnail">
@@ -175,17 +175,21 @@ if(isset($_SESSION['user_id'])){
 
 
                     <div class="ps-product__container">';
-                    if(isset($_SESSION['user_id'])){
-                    echo '<div class="text-center my-1">
+                        if(isset($_SESSION['user_id'])){
+                        echo '<div class="text-center my-1">
 
-                            <a href="edit-products.php?id='.$rows_loop['products_id'].'"><button type="button" class="btn btn-success btn-lg">Edit</button></a>
-                            <a href="delete-products.php?id='.$rows_loop['products_id'].'"><button type="button" class="btn btn-danger btn-lg">Delete</button></a>
-                        </div>';}
+                                <a href="edit-products.php?id='.$rows_loop['products_id'].'"><button type="button" class="btn btn-success btn-lg">Edit</button></a>
+                                <a href="delete-products.php?id='.$rows_loop['products_id'].'"><button type="button" class="btn btn-danger btn-lg">Delete</button></a>
+                            </div>';}
 
 
         
 
                     echo '
+                            <p class="ps-product__price sale">'; if(!empty($rows_loop['products_sales_price'])){
+                                echo '&#8358;'.number_format($rows_loop['products_sales_price']).' ' . '<del>'.'&#8358;'.number_format($rows_loop['products_price']) .'</del>';
+                            } 
+                            echo '</p>
                             <div class="ps-product__content"><a class="ps-product__title" href="product-description.php?id='.$rows_loop['products_id'].'">'.$rows_loop['products_name'].'</a>
                                 <div class="ps-product__rating">
                                     <select class="ps-rating" data-read-only="true">
@@ -196,20 +200,19 @@ if(isset($_SESSION['user_id'])){
                                         <option value="1">5</option>
                                     </select>
                                 </div>
-                                <p class="ps-product__price sale">'; if(!empty($rows_loop['products_sales_price'])){
-                                    echo '&#8358;'.number_format($rows_loop['products_sales_price']).' ' . '<del>'.'&#8358;'.number_format($rows_loop['products_price']) .'</del>';
-                                } 
+
+                                
+
+                                <div class="ps-product__progress-bar ps-progress" data-value="100">
+                                <div class="progress" style="height: 20px;">
+                                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                    <div class="ps-progress__value"><span></span></div>
+                                    <p>'.$rows_loop['inventory_value'].'</p>
+                                </div>
                 
-                echo '</p>
-                
-                </div>
-                    <div class="ps-product__content hover"><a class="ps-product__title" href="product-description.php?id='.$rows_loop['products_id'].'">'.$rows_loop['products_name'].'</a>
-                        <p class="ps-product__price sale">'; if(!empty($rows_loop['products_sales_price'])){
-                            echo '&#8358;'.number_format($rows_loop['products_sales_price']).' ' . '<del>'.'&#8358;'.number_format($rows_loop['products_price']) .'</del>';
-                        } 
-                    echo ' </p>
-                            
-                    </div>
+                            </div>
+                   
                     
                     </div>
 

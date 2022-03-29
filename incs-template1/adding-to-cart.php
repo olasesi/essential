@@ -10,13 +10,16 @@ $status="";
 
 if (isset($_POST['code']) && $_POST['code']!=''){
     $code = $_POST['code'];
-    $result = mysqli_query($connect,"SELECT * FROM `products` WHERE `products_id`='$code'");
+    $result = mysqli_query($connect,"SELECT * FROM products, inventory WHERE products_id='".$code."' AND inventory_product_id = products_id");
     $row = mysqli_fetch_assoc($result);
     $name = $row['products_name'];
     $code = 'code'.$row['products_id'];
     $cat = $row['products_sub_categories'];
     $price = $row['products_price'];
     $image = $row['products_image'];
+    $inventory = $row['inventory_value'];
+    $inventory_value_prev = $row['inventory_value_prev'];
+
     
     $cartArray = array(
         $code=>array(
@@ -25,7 +28,10 @@ if (isset($_POST['code']) && $_POST['code']!=''){
         'cat'=>$cat,
         'price'=>$price,
         'quantity'=>1,
-        'image'=>$image)
+        'image'=>$image,
+        'inventory_value'=>$inventory,
+        'inventory_value_prev'=>$inventory_value_prev
+        )
     );
 
     if(empty($_SESSION['shopping_cart'])) {

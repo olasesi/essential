@@ -15,7 +15,7 @@ if(!isset($_GET['id'])){
 }
 ?>
 <?php
-$query_page_section =  mysqli_query($connect, "SELECT * FROM products WHERE products_id = '".mysqli_real_escape_string ($connect, $_GET['id'])."'") or die(db_conn_error);
+$query_page_section =  mysqli_query($connect, "SELECT * FROM inventory,products WHERE products_id = '".mysqli_real_escape_string ($connect, $_GET['id'])."' AND inventory_product_id =  '".mysqli_real_escape_string ($connect, $_GET['id'])."' ") or die(db_conn_error);
 
 while($row_cat = mysqli_fetch_array($query_page_section)){
     $products_name=$row_cat['products_name'];
@@ -30,6 +30,7 @@ while($row_cat = mysqli_fetch_array($query_page_section)){
     $products_short_description=$row_cat['products_short_description'];
     $products_long_description=$row_cat['products_long_description'];
     $products_image=$row_cat['products_image'];
+    $inventory_value=$row_cat['inventory_value'];
 }
 
 
@@ -74,6 +75,13 @@ if($_POST['sales_price'] < $_POST['price']){
 
     
 }
+
+
+if (preg_match ('/^[0-9]{1,4}$/i', trim($_POST['inventory']))) {	
+    $inventory = mysqli_real_escape_string ($connect, trim($_POST['inventory']));
+} else {
+    $errors['inventory'] = 'Please enter valid number';
+} 
 
 
  if ($_POST['products_categories'] == 'Choose categories') {
@@ -220,6 +228,8 @@ $image_uploaded = (isset($_SESSION['images']['new_name']))?$_SESSION['images']['
 
  mysqli_query($connect,"UPDATE products SET products_image = '".$image_uploaded."' WHERE products_id = '".$_GET['id']."'") or die(db_conn_error);
     if (mysqli_affected_rows($connect) == 1) {
+
+        mysqli_query($connect,"INSERT INTO inventory(inventory_product_id,inventory_value) VALUES ( '". mysqli_insert_id($connect)."','".$inventory."')") or die(db_conn_error);
         
         $_POST = array();		
         $_FILES = array();
@@ -438,22 +448,29 @@ if(isset ($_POST['products_categories'])){
 
 
 
-<div class="row">
+                <div class="row">
 
 
 
-                                         <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Discount Price</label>
-                                                <input class="form-control" type="text" name="sales_price" placeholder="e.g 5500" value="<?php if(isset($_POST['sales_price'])){echo $_POST['sales_price'];}else{echo $products_sales_price;} ?>">
-                                                <?php if (array_key_exists('sales_price', $errors)) {
-	                    echo '<p class="text-danger">'.$errors['sales_price'].'</p>';
-	                    }
-                    ?>
-                        
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>Discount Price</label>
+                            <input class="form-control" type="text" name="sales_price" placeholder="e.g 5500" value="<?php if(isset($_POST['sales_price'])){echo $_POST['sales_price'];}else{echo $products_sales_price;} ?>">
+                            <?php if (array_key_exists('sales_price', $errors)) {
+                                echo '<p class="text-danger">'.$errors['sales_price'].'</p>';
+                                }
+                            ?>
+    
 
 
-                                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group">
+                            <label>No of product</label>
+                            <input class="form-control" type="number" name="inventory"  value="<?php if(isset($_POST['inventory'])){echo $_POST['inventory'];}else{echo $inventory_value;} ?>" min="1">           
+                        </div>
 
                     </div>
 

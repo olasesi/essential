@@ -28,23 +28,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit'])){
 
 
   
-if(!empty($_POST['price']) AND empty($_POST['sales_price'])){
-    $products_sales_price = mysqli_real_escape_string ($connect, trim($_POST['sales_price']));
-}elseif(!empty($_POST['price']) AND !empty($_POST['sales_price'])){
-if(preg_match ('/^[0-9]{0,10}$/i', trim($_POST['price'])) AND preg_match ('/^[0-9]{0,10}$/i', trim($_POST['sales_price']))){
-if($_POST['sales_price'] < $_POST['price']){
-    $products_sales_price = mysqli_real_escape_string($connect, trim($_POST['sales_price']));
-}else{
-    $errors['sales_price'] = 'Regular price must be greater than sales price';  
-}
+    if(!empty($_POST['price']) AND empty($_POST['sales_price'])){
+        $products_sales_price = mysqli_real_escape_string ($connect, trim($_POST['sales_price']));
+    }   elseif(!empty($_POST['price']) AND !empty($_POST['sales_price'])){
+        if(preg_match ('/^[0-9]{0,10}$/i', trim($_POST['price'])) AND preg_match ('/^[0-9]{0,10}$/i', trim($_POST['sales_price']))){
+            if($_POST['sales_price'] < $_POST['price']){
+                $products_sales_price = mysqli_real_escape_string($connect, trim($_POST['sales_price']));
+            }else{
+                $errors['sales_price'] = 'Regular price must be greater than sales price';  
+            }
 
-}else{
-    $errors['sales_price'] = 'Please enter valid value for regular price or and sales price.';    
-}
+        }else{
+            $errors['sales_price'] = 'Please enter valid value for regular price or and sales price.';    
+        }
 
-    
-}
+        
+    }
 
+ 
+if (preg_match ('/^[0-9]{1,4}$/i', trim($_POST['inventory'])) || empty(trim($_POST['inventory']))) {	
+    $inventory = mysqli_real_escape_string ($connect, trim($_POST['inventory']));
+} else {
+    $errors['inventory'] = 'Please enter valid number';
+} 
+ 
 
  if ($_POST['products_categories'] == 'Choose categories') {
         $errors['products_categories'] = 'Please select a category';
@@ -68,7 +75,7 @@ if($_POST['sales_price'] < $_POST['price']){
     if (isset($_POST['new_arrivals'])) {
         $new_arrivals = $_POST['new_arrivals'];
     } else{
-        $new_arrivals =0;
+        $new_arrivals = 0;
     }
 
     if (isset($_POST['best_sellers']) ){
@@ -80,7 +87,7 @@ if($_POST['sales_price'] < $_POST['price']){
     if (isset($_POST['most_popular'])) {
         $most_popular = $_POST['most_popular'];
     }else{
-$most_popular = 0 ;
+        $most_popular = 0 ;
 
     }
 
@@ -97,6 +104,15 @@ $most_popular = 0 ;
 		$errors['long'] = 'Character is longer than 1000 ';
 	} 
 
+
+    $num_deals = mysqli_query($connect, "SELECT products_deals FROM products WHERE products_deals = 'Deals of the day'") or die(db_conn_error);
+
+    if(mysqli_num_rows($num_deals) > 3) {
+
+        $errors['toomuch'] = 'products under deals of the day cannot be more than 12';
+        
+    }
+ 
  
     if (is_uploaded_file($_FILES['product_image']['tmp_name']) AND $_FILES['product_image']['error'] == UPLOAD_ERR_OK){ 
          
@@ -140,34 +156,39 @@ $most_popular = 0 ;
         $_SESSION['images']['file_name'] = $_FILES['product_image']['name'];
         
 
-} else {
-        trigger_error('The file could not be moved.');
-        $errors['not_moved'] = "The file could not be moved.";
-        unlink ($_FILES['product_image']['tmp_name']);
-        }	
+        } else {
+            trigger_error('The file could not be moved.');
+            $errors['not_moved'] = "The file could not be moved.";
+            unlink ($_FILES['product_image']['tmp_name']);
+            }	
 
-    }
+        }
 
-$image_uploaded= (isset($_SESSION['images']['new_name']))?$_SESSION['images']['new_name']:'default.jpg';
+    $image_uploaded= (isset($_SESSION['images']['new_name']))?$_SESSION['images']['new_name']:'default.jpg';
 
-$q = mysqli_query($connect,"INSERT INTO products(products_name, products_price, products_sales_price, products_sub_categories, products_promo, products_deals,products_new_arrivals, products_best_sellers, products_popular, products_short_description, products_long_description, products_image) 
-VALUES ('".$products_name."','".$products_price."','".$products_sales_price."','".$cat."','".$hot_promo."','".$deals_of_the_day."','".$new_arrivals."','".$best_sellers."','".$most_popular."','".$products_desc_short."','".$products_desc_long."', '".$image_uploaded."')") or die(db_conn_error);
+    mysqli_query($connect,"INSERT INTO products(products_name, products_price, products_sales_price, products_sub_categories, products_promo, products_deals,products_new_arrivals, products_best_sellers, products_popular, products_short_description, products_long_description, products_image) 
+    VALUES ('".$products_name."','".$products_price."','".$products_sales_price."','".$cat."','".$hot_promo."','".$deals_of_the_day."','".$new_arrivals."','".$best_sellers."','".$most_popular."','".$products_desc_short."','".$products_desc_long."', '".$image_uploaded."')") or die(db_conn_error);
     if (mysqli_affected_rows($connect) == 1) {
         
+        mysqli_query($connect,"INSERT INTO inventory(inventory_product_id,inventory_value) VALUES ( '". mysqli_insert_id($connect)."','".$inventory."')") or die(db_conn_error);
+       
+
+
         $_POST = array();		
         $_FILES = array();
             
         unset($_FILES['product_image'], $_SESSION['images']);
         header('Location:'.GEN_WEBSITE.'/add-products.php?confirm=1');
         exit();
-       
+    
         
-}
-
-
-             
+    }
+    
+         
            
  } 
+
+ 
  
  
   }
@@ -234,30 +255,30 @@ include ('../incs-template1/header.php');
 
 
 
-<?php 
-if(isset($_GET['confirm']) AND $_GET['confirm'] == 1){
+                    <?php 
+                    if(isset($_GET['confirm']) AND $_GET['confirm'] == 1){
 
-    echo ' <h3><span class="badge bg-primary">New product added</span></h3>';
+                        echo ' <h3><span class="badge bg-primary">New product added</span></h3>';
 
-}
+                    }
 
-if(isset($_GET['confirm_delete']) AND $_GET['confirm_delete'] == 1){
+                    if(isset($_GET['confirm_delete']) AND $_GET['confirm_delete'] == 1){
 
-    echo ' <h3><span class="badge bg-primary">Category has been deleted</span></h3>';
+                        echo ' <h3><span class="badge bg-primary">Category has been deleted</span></h3>';
 
-}
+                    }
 
 
 
-if(isset($_GET['confirm_modify']) AND $_GET['confirm_modify'] == 1){
+                    if(isset($_GET['confirm_modify']) AND $_GET['confirm_modify'] == 1){
 
-    echo ' <h3><span class="badge bg-primary">Category has been deleted</span></h3>';
+                        echo ' <h3><span class="badge bg-primary">Category has been deleted</span></h3>';
 
-}
+                    }
 
-?>
+                    ?>
 
- <div class="ps-section__right">
+                    <div class="ps-section__right">
                             <form class="ps-form--account-setting" action="" method="POST" enctype="multipart/form-data">
                                 <div class="ps-form__header">
                                     <h3> Add products</h3>
@@ -267,9 +288,9 @@ if(isset($_GET['confirm_modify']) AND $_GET['confirm_modify'] == 1){
                                         <label>Product name <span style="color:red;">*</span></label>
                                         <input class="form-control" type="text" placeholder="e.g Long sleeve Shirt" name="products_name" value="<?php if(isset($_POST['products_name'])){echo $_POST['products_name'];} ?>">
                                         <?php if (array_key_exists('products_name', $errors)) {
-	                    echo '<p class="text-danger">'.$errors['products_name'].'</p>';
-	                    }
-                    ?>
+                                        echo '<p class="text-danger">'.$errors['products_name'].'</p>';
+                                        }
+                                    ?>
                                     </div> 
                                     <div class="row">
                                          <div class="col-sm-6">
@@ -281,12 +302,17 @@ if(isset($_GET['confirm_modify']) AND $_GET['confirm_modify'] == 1){
 	                    }
                     ?>
                         
-</div>
+                </div>
 
 
 
 
                                             <div class="form-group">
+                                            <?php
+                                                if (array_key_exists('toomuch', $errors)) {
+                                                    echo '<p class="text-danger">'.$errors['toomuch'].'</p>';
+                                                }
+                                            ?>
                                         <div class="ps-checkbox">
                                             <input class="form-control" type="checkbox" id="hot promo" name="hot_promo" value="Hot promotion" <?php if(isset($_POST['hot_promo'])){echo 'checked';} ?>>
                                             <label for="hot promo">Hot promotions</label>
@@ -372,24 +398,31 @@ if(isset($_GET['confirm_modify']) AND $_GET['confirm_modify'] == 1){
 
 
 
-<div class="row">
+                        <div class="row">
 
 
 
-                                         <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label>Discount Price</label>
-                                                <input class="form-control" type="text" name="sales_price" placeholder="e.g 5500" value="<?php if(isset($_POST['sales_price'])){echo $_POST['sales_price'];} ?>">
-                                                <?php if (array_key_exists('sales_price', $errors)) {
-	                    echo '<p class="text-danger">'.$errors['sales_price'].'</p>';
-	                    }
-                    ?>
-                        
+                            <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Discount Price</label>
+                                <input class="form-control" type="text" name="sales_price" placeholder="e.g 5500" value="<?php if(isset($_POST['sales_price'])){echo $_POST['sales_price'];} ?>">
+                                <?php if (array_key_exists('sales_price', $errors)) {
+                                    echo '<p class="text-danger">'.$errors['sales_price'].'</p>';
+                                    }
+                                ?>
+        
 
+                            
+                            </div>
 
-                                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>No of product</label>
+                                <input class="form-control" type="number" name="inventory"  value="<?php if(isset($_POST['inventory'])){echo $_POST['inventory'];} else{echo 1;} ?>" min="1">           
+                            </div>
 
-                    </div>
+                        </div>
 
 
 
