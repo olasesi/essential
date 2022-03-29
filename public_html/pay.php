@@ -7,12 +7,20 @@
 
     $all_total_price += $codearray['price'] * $codearray['quantity'];
   } 
-  
+ 
+
+
+
+    
+
+
+
+
+
   
 if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['pay'])){
 	 
-
-    $result = array();
+$result = array();
 
     //Set other parameters as keys in the $postdata array
 

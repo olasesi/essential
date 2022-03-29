@@ -99,6 +99,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit'])){
  
   }
 
+  if(isset($_POST['delete'])) {
+    $num_top_banner = mysqli_query($connect, "SELECT top_banner_id, top_banner_image FROM top_banner") or die(db_conn_error);
+
+    if(mysqli_num_rows($num_top_banner) == 1) {
+
+        while($deleteFolder = mysqli_fetch_array($num_top_banner)){
+            $deleteImage = $deleteFolder['top_banner_image'];
+            unlink ('images/top-banner/'.$deleteImage);
+        }
+
+        mysqli_query($connect, "DELETE FROM top_banner") or die(db_conn_error);
+
+        $deleteDone = 1;
+    }
+  }
+
   //TODO
   //remove uploaded from folder
 
@@ -152,8 +168,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit'])){
                             </aside>
                         </div>
                     </div>
+
+
+
                     <div class="col-lg-8">
                         <div class="ps-section__right">
+                            <?php
+                                if(isset($deleteDone) AND $deleteDone == 1){
+
+                                    echo ' <h3><span class="badge bg-primary">Top banner has been removed</span></h3>';
+
+                                }
+
+                            ?>
                             <form class="ps-form--account-setting" action="" method="POST" enctype="multipart/form-data">
                                 <div class="ps-form__header">
                                     <h3> Top Banner</h3>
@@ -191,6 +218,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit'])){
                                 </div>
                                 <div class="form-group submit">
                                     <button class="ps-btn" type="submit" name="submit">Update</button>
+                                </div>
+                            </form>
+                            <form class="ps-form--account-setting" action="" method="POST" enctype="multipart/form-data">
+                                <div class="ps-form__header">
+                                    <h3>Delete Top Banner</h3>
+                                </div>
+                                <div class="form-group submit">
+                                    <button class="ps-btn" type="submit" name="delete">Delete</button>
                                 </div>
                             </form>
                         </div>

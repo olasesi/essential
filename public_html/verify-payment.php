@@ -26,6 +26,26 @@ if (array_key_exists('data', $result) && array_key_exists('status', $result['dat
 
    
     mysqli_query($connect, "UPDATE orders SET orders_status='1' WHERE orders_reference = '".$_GET['reference']."' AND orders_status = '0'") or die(db_conn_error);
+
+
+	
+    foreach($_SESSION['shopping_cart'] as $c => $cs){
+		$adding = $cs['inventory_value_prev'];
+		$sub = intval(substr($cs['code'], 4));
+		
+		mysqli_query($connect, "UPDATE `inventory` SET `inventory_value_prev` = `inventory_value_prev` + '".$adding."'
+		WHERE `inventory_product_id` = '".$sub."'") or die(mysqli_error($connect));
+
+	   } 
+  
+  
+  
+  
+
+	
+   
+
+
    
 
 
@@ -465,10 +485,10 @@ $body .= '<tr>
     
      $headers = 'MIME-Version: 1.0' . "\r\n";
     $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-    $headers .= 'From: noreply@'.website_name. "\r\n";
-    $headers .= 'Reply-To: noreply@'.website_name. "\r\n";
-    $headers .= 'Return-Path: noreply@'.website_name. "\r\n";
-    $headers .= 'BCC: noreply@'.website_name. "\r\n";
+    $headers .= 'From: noreply@'.$website_name. "\r\n";
+    $headers .= 'Reply-To: noreply@'.$website_name. "\r\n";
+    $headers .= 'Return-Path: noreply@'.$website_name. "\r\n";
+    $headers .= 'BCC: noreply@'.$website_name. "\r\n";
     $headers .= 'X-Priority: 3' . "\r\n";
     $headers .= 'X-Mailer: PHP/'. phpversion() . "\r\n";
     
@@ -918,10 +938,10 @@ $body .= '<tr>
     
      $headers2 = 'MIME-Version: 1.0' . "\r\n";
     $headers2 .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-    $headers2 .= 'From: noreply@'.website_name. "\r\n";
-    $headers2 .= 'Reply-To: noreply@'.website_name. "\r\n";
-    $headers2 .= 'Return-Path: noreply@'.website_name. "\r\n";
-    $headers2 .= 'BCC: noreply@'.website_name. "\r\n";
+    $headers2 .= 'From: noreply@'.$website_name. "\r\n";
+    $headers2 .= 'Reply-To: noreply@'.$website_name. "\r\n";
+    $headers2 .= 'Return-Path: noreply@'.$website_name. "\r\n";
+    $headers2 .= 'BCC: noreply@'.$website_name. "\r\n";
     $headers2 .= 'X-Priority: 3' . "\r\n";
     $headers2 .= 'X-Mailer: PHP/'. phpversion() . "\r\n";
     

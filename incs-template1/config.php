@@ -112,5 +112,5 @@ function genReference($qtd){
 
 ?>
 <?php 
-define('API', 'Bearer sk_live_1092639786efd00557f73b5ba7819ed8984612e5');
+define('API', 'Bearer sk_test_4cab8d4d937b1ab5f847c78c0014a2f6a6e3405c');
 ?>

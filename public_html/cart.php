@@ -102,7 +102,7 @@ if (isset($_POST['action']) && $_POST['action']=="change"){
                                         <form method='post' action=''>
                                           <input type='hidden' name='code' value="<?php echo $product["code"]; ?>" />
                                           <input type='hidden' name='action' value="change" />
-                                          <input name='quantity' class="form-control" type="number" placeholder="1" value="<?php echo $product["quantity"]; ?>" min="1" onChange="this.form.submit()">
+                                          <input name='quantity' class="form-control" type="number" placeholder="1" value="<?php echo $product['quantity']; ?>" min="1" max="<?php echo $product['inventory_value'] - $product['inventory_value_prev']; ?>" onChange="this.form.submit()">
                                         
                                         </form>
                                       </div>
@@ -310,5 +310,6 @@ foreach($_SESSION["shopping_cart"] as $code => $values) {
 
 
     </div>
+  
 
 <?php include ('../incs-template1/footer.php'); ?>
