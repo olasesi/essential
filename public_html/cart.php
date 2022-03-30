@@ -99,6 +99,17 @@ if (isset($_POST['action']) && $_POST['action']=="change"){
                                     <td class="price" data-label="Price"><?php echo "&#8358;".number_format($product["price"]); ?></td>
                                     <td data-label="Quantity">
                                       <div class="form-group--number">
+                                      <?php
+                                    $result = mysqli_query($connect,"SELECT inventory_value, inventory_value_prev FROM inventory WHERE 	inventory_product_id='". substr($product["code"], 4)."'") or die(mysqli_error($connect));
+                                while($deduct = mysqli_fetch_array($result)){
+
+if(isset($_POST['quantity'])){
+                            if($_POST['quantity'] > ($deduct['inventory_value'] - $deduct['inventory_value_prev'])){
+                                      echo '<p class="text-danger">Maximum of '.($deduct['inventory_value'] - $deduct['inventory_value_prev']). ' quantity can be added </p>';
+                                      $error_on_number = 'Enter products less than '.($deduct['inventory_value'] - $deduct['inventory_value_prev']);
+                                    }}
+                                  }
+                                      ?>
                                         <form method='post' action=''>
                                           <input type='hidden' name='code' value="<?php echo $product["code"]; ?>" />
                                           <input type='hidden' name='action' value="change" />
@@ -147,7 +158,9 @@ if (isset($_POST['action']) && $_POST['action']=="change"){
                           if(!empty($_SESSION["shopping_cart"])){
                             
                             echo '
-                            <form method="POST" action="checkout.php">
+                            <form method="POST" action="checkout.php">';
+                           if(isset($error_on_number)){echo '<input type="hidden" name="error_on_number" value="1">';} 
+                            echo '<input type="hidden" name="error_in_input" value="product_quantity">
                               <button type="submit" name="buy_button" class="ps-btn ps-btn--fullwidth">Proceed to checkout</button>
                             </form>
                             ';

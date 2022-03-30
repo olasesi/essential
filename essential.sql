@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Mar 29, 2022 at 06:59 PM
--- Server version: 5.7.24
--- PHP Version: 7.2.19
+-- Host: 127.0.0.1
+-- Generation Time: Mar 31, 2022 at 12:48 AM
+-- Server version: 10.4.19-MariaDB
+-- PHP Version: 7.4.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `tracybr1_betasouk`
+-- Database: `essential`
 --
 
 -- --------------------------------------------------------
@@ -32,7 +32,7 @@ CREATE TABLE `banner` (
   `banner_name` varchar(30) NOT NULL,
   `banner_image` varchar(255) NOT NULL DEFAULT 'banners.jpg',
   `banner_size` varchar(30) NOT NULL,
-  `banner_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `banner_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -57,9 +57,9 @@ INSERT INTO `banner` (`banner_id`, `banner_name`, `banner_image`, `banner_size`,
 CREATE TABLE `inventory` (
   `inventory_id` int(11) NOT NULL,
   `inventory_product_id` int(11) NOT NULL,
-  `inventory_value` int(4) NOT NULL DEFAULT '1',
-  `inventory_value_prev` int(4) NOT NULL DEFAULT '0',
-  `inventory_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `inventory_value` int(4) NOT NULL DEFAULT 1,
+  `inventory_value_prev` int(4) NOT NULL DEFAULT 0,
+  `inventory_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -98,9 +98,9 @@ CREATE TABLE `orders` (
   `orders_city` varchar(30) NOT NULL,
   `orders_name` varchar(30) NOT NULL,
   `orders_price` varchar(11) NOT NULL,
-  `orders_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `orders_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `orders_reference` varchar(10) NOT NULL,
-  `orders_status` int(1) NOT NULL DEFAULT '0'
+  `orders_status` int(1) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -124,7 +124,8 @@ INSERT INTO `orders` (`orders_id`, `orders_firstname`, `orders_surname`, `orders
 (14, 'asdfsdf', 'asdfsdf', 'ola.sesi@gmail.com', '09878988888', 'asdfsdf', 'asdfsfd', 'products', '9000', '2022-03-29 18:24:35', 'S70VFZUHX0', 1),
 (15, 'fgdhdgdf', 'gfhddhgfh', 'akfsdk@asdfsd.com', '09999999999', 'fgdhfhdgf', 'ffgfhhfh', 'products', '9000', '2022-03-29 18:39:09', '958O0EF3RX', 1),
 (16, 'fytffytfyt', 'utuyyu', 'utuytu@gmail.com', '09999999999', 'ututtu', 'yuuytuy', 'products', '9000', '2022-03-29 18:43:30', 'FXSKW8XYME', 1),
-(17, 'adsadas', 'sadadsa', 'olusesi@gmail.com', '09999999999', 'sfdsdfsdf', 'sdfsdf', 'products', '9000', '2022-03-29 18:53:38', '3DYVG4ILV5', 1);
+(17, 'adsadas', 'sadadsa', 'olusesi@gmail.com', '09999999999', 'sfdsdfsdf', 'sdfsdf', 'products', '9000', '2022-03-29 18:53:38', '3DYVG4ILV5', 1),
+(18, 'Ahmed', 'Olusesi', 'ola.sesi@yahoo.com', '08074574512', 'Ikeja', 'Lagos', 'products', '9000', '2022-03-30 13:39:38', 'PSA5Y1E0JI', 0);
 
 -- --------------------------------------------------------
 
@@ -146,7 +147,7 @@ CREATE TABLE `products` (
   `products_short_description` varchar(255) NOT NULL,
   `products_long_description` text NOT NULL,
   `products_image` varchar(255) NOT NULL DEFAULT 'default.jpg',
-  `products_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `products_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -168,7 +169,7 @@ INSERT INTO `products` (`products_id`, `products_name`, `products_price`, `produ
 CREATE TABLE `products_categories` (
   `products_categories_id` int(11) NOT NULL,
   `products_categories_name` varchar(20) NOT NULL,
-  `products_categories_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `products_categories_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -190,7 +191,7 @@ CREATE TABLE `shop_slider_banner` (
   `shop_slider_name` varchar(10) NOT NULL,
   `shop_slider_image` varchar(255) NOT NULL DEFAULT 'default.jpg',
   `shop_slider_size` varchar(8) NOT NULL DEFAULT '870x399',
-  `shop_slider_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `shop_slider_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -212,7 +213,7 @@ CREATE TABLE `slider_banner` (
   `slider_banner_name` varchar(20) NOT NULL,
   `slider_banner_image` varchar(255) NOT NULL DEFAULT 'slide-1.jpg',
   `slider_banner_size` varchar(255) NOT NULL DEFAULT '1230 by 425',
-  `slider_banner_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `slider_banner_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -227,6 +228,26 @@ INSERT INTO `slider_banner` (`slider_id`, `slider_banner_name`, `slider_banner_i
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `sub_categories`
+--
+
+CREATE TABLE `sub_categories` (
+  `id_sub_categories` int(11) NOT NULL,
+  `id_categories` int(11) NOT NULL,
+  `sub_categories_name` varchar(30) NOT NULL,
+  `sub_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `sub_categories`
+--
+
+INSERT INTO `sub_categories` (`id_sub_categories`, `id_categories`, `sub_categories_name`, `sub_timestamp`) VALUES
+(3, 2, 'rwasdgf', '2022-03-30 17:42:42');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `top_banner`
 --
 
@@ -235,7 +256,7 @@ CREATE TABLE `top_banner` (
   `top_banner_name` varchar(255) NOT NULL DEFAULT 'top-banner',
   `top_banner_image` varchar(255) NOT NULL,
   `top_banner_size` varchar(10) NOT NULL DEFAULT '1200x80',
-  `top_banner_timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `top_banner_timestamp` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -246,11 +267,11 @@ CREATE TABLE `top_banner` (
 
 CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
-  `active` int(1) NOT NULL DEFAULT '1',
+  `active` int(1) NOT NULL DEFAULT 1,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `cookies_session` varchar(255) NOT NULL,
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -258,7 +279,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `active`, `email`, `password`, `cookies_session`, `timestamp`) VALUES
-(1, 1, 'test@gmail.com', 'password', '546b1ead3cbf6e423fef87bff0c575ef', '2022-03-25 17:01:54');
+(1, 1, 'test@gmail.com', 'password', 'beb5844fc6bc2a5f0fc0c7dff3394a0a', '2022-03-30 13:49:42');
 
 --
 -- Indexes for dumped tables
@@ -307,6 +328,12 @@ ALTER TABLE `slider_banner`
   ADD PRIMARY KEY (`slider_id`);
 
 --
+-- Indexes for table `sub_categories`
+--
+ALTER TABLE `sub_categories`
+  ADD PRIMARY KEY (`id_sub_categories`);
+
+--
 -- Indexes for table `top_banner`
 --
 ALTER TABLE `top_banner`
@@ -338,7 +365,7 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `orders_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `orders_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -363,6 +390,12 @@ ALTER TABLE `shop_slider_banner`
 --
 ALTER TABLE `slider_banner`
   MODIFY `slider_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `sub_categories`
+--
+ALTER TABLE `sub_categories`
+  MODIFY `id_sub_categories` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `top_banner`

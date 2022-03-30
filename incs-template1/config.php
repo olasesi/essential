@@ -4,7 +4,7 @@ session_start();
 
 
 //Website name without www and .com
-$website_name = "localhost:88/essential/public_html";
+$website_name = "/public_html";
 //first eight characters of website name and end with underscore
 $website_name_part ="mspcolle_";
 //Website name without www and .com and words spaced
@@ -76,12 +76,12 @@ define("db_conn_error","<div>
 
 //$website_name_part.'admin'------>username
 //$website_name_part.'admin'------>database
-$connect = mysqli_connect('localhost','root',$pass_word,'tracybr1_betasouk') or die(db_conn_error);		
-$data_select = mysqli_select_db($connect,'tracybr1_betasouk') or die(db_conn_error);
+$connect = mysqli_connect('localhost','root',$pass_word,'essential') or die(db_conn_error);		
+$data_select = mysqli_select_db($connect,'essential') or die(db_conn_error);
 
 
 
-define("GEN_WEBSITE","http://".$website_name);      //Enter your website name eg www.designsbyblocks.com.ng.
+define("GEN_WEBSITE","http://localhost/essential".$website_name);      //Enter your website name eg www.designsbyblocks.com.ng.
 define("SITE_NAME_NO_WWW", $website_name_with_spaces); //Enter the name of your website logo eg designs by blocks.
 define("TITLE", $website_name_with_spaces);            //Enter your website title eg welcome to designs by blocks.
 

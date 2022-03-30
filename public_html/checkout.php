@@ -1,7 +1,10 @@
 <?php require_once ('../incs-template1/config.php'); ?>
 <?php include_once ('../incs-template1/cookie-session.php'); ?>
 <?php
-
+if(isset($_POST['error_on_number']) AND $_POST['error_on_number'] == 1){
+    header('Location:'.GEN_WEBSITE.'/cart.php');
+	exit();
+}
 
 if (!isset($errors)){$errors = array();}
 if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['checkout'])){
