@@ -12,15 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' and isset($_POST['delete_categories']))
 
     $query_products_categories = mysqli_query($connect, "UPDATE products SET products_sub_categories = '1' WHERE products_sub_categories = '" . $_POST['delete_categories'] . "'") or die(db_conn_error);
 
+mysqli_query($connect, "DELETE FROM sub_categories WHERE id_sub_categories = '" . $_POST['delete_categories'] . "'") or die(db_conn_error);
 
-    mysqli_query($connect, "DELETE FROM sub_categories WHERE id_sub_categories = '" . $_POST['delete_categories'] . "'") or die(db_conn_error);
-
-
-
-
-
-
-    header('Location:' . GEN_WEBSITE . '/sub-categories.php?confirm_delete=1');
+header('Location:' . GEN_WEBSITE . '/sub-categories.php?confirm_delete=1');
     exit();
 }
 
@@ -28,19 +22,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' and isset($_POST['delete_categories']))
 $errors = array();
 if ($_SERVER['REQUEST_METHOD'] == 'POST' and isset($_POST['submit'])) {
 
+
+    if($_POST['select_option'] =='Choose categories'){
+        $errors['parent_categories'] = 'Please choose parent category.';
+    
+    }else{
+        $sub_cat = $_POST['select_option'];
+    
+    }
+    
+
     if (preg_match('/^.{3,20}$/i', trim($_POST['sub_categories']))) {
         $products_categories = mysqli_real_escape_string($connect, trim($_POST['sub_categories']));
     } else {
-        $errors['sub_categories'] = 'Please enter valid name.';
+        $errors['products_sub_categories'] = 'Please enter valid name.';
     }
 
-if($_POST['select_option'] =='Choose categories'){
-    $errors['parent_categories'] = 'Please choose parent category.';
-
-}else{
-    $sub_cat = $_POST['select_option'];
-
-}
 
 
     //now to edit the product	
@@ -162,45 +159,34 @@ include('../incs-template1/settings.php');
                             ';
                     ?>
                         <?php
-                        $products_cat_select = mysqli_query($connect, "SELECT products_categories_name, products_categories_id FROM products_categories") or die(db_conn_error);
+                        $products_cat_select = mysqli_query($connect, "SELECT products_categories_name, products_categories_id FROM products_categories WHERE products_categories_id != '1'") or die(db_conn_error);
 
 
                         echo '<option>Choose categories</option>';
                         while ($while_products_cat = mysqli_fetch_array($products_cat_select)) {
-                            //$selected = (isset($_POST['products_categories']))?:;
 
                             echo '<option value="' . $while_products_cat['products_categories_id'] . '">' . $while_products_cat['products_categories_name'] . '</option>';
                         }
-
-
+                     echo '</select> ';
                         ?>
 
-                        <?php
-                        echo '  </select> ';
-                        ?>
-                        <?php if (array_key_exists('products_categories', $errors)) {
-                            echo '<p class="text-danger" >' . $errors['products_categories'] . '</p>';
+
+                        <?php if (array_key_exists('parent_categories', $errors)){
+                            echo '<p class="text-danger" >' . $errors['parent_categories'] . '</p>';
                         }
-                        ?>
-                        <?php
-                        echo   '   </div>
-
-
-                        <div class="form-group">
+                        
+                        echo '</div>
+<div class="form-group">
                         <label>Sub-category name</label>
-                    <input class="form-control" type="text" placeholder="e.g Clothings" name="sub_categories" value="'; ?>
-                        <?php if (isset($_POST['sub_categories'])) {
-                            echo $_POST['sub_categories'];
-                        } ?> <?php echo '">'; ?>
+<input class="form-control" type="text" placeholder="e.g Men clothings" name="sub_categories"';?><?php if (isset($_POST['sub_categories'])){echo 'value="'.$_POST['sub_categories'].'"/>';}?>
 
-                        <?php if (array_key_exists('sub_categories', $errors)) {
-                            echo '<p class="text-danger" >' . $errors['sub_categories'] . '</p>';
+                        <?php if (array_key_exists('products_sub_categories', $errors)){
+                            echo '<p class="text-danger" >' . $errors['products_sub_categories'] . '</p>';
                         }
                         ?>
                         <?php echo '    
             </div>
-
-                                <div class="row">
+<div class="row">
 
                                 </div>
                             </div>

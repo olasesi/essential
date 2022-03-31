@@ -35,7 +35,7 @@ $statement = 'products WHERE id_categories = '.$_GET['id'].' ORDER BY id_sub_cat
                             $query_page_section =  mysqli_query($connect, "SELECT id_categories, sub_categories_name FROM sub_categories") or die(db_conn_error);
 
                             while($row_cat = mysqli_fetch_array($query_page_section)){
-                                echo  '<li><a href="sub-categories.php?id='.$row_cat['id_categories'].'">'.$row_cat['sub_categories_name'].'</a>
+                                echo  '<li><a href="products-sub-categories.php?id='.$row_cat['id_categories'].'">'.$row_cat['sub_categories_name'].'</a>
                                 </li>';
 
                             }
@@ -49,8 +49,8 @@ $statement = 'products WHERE id_categories = '.$_GET['id'].' ORDER BY id_sub_cat
                     <div class="ps-shopping ps-tab-root">
                         <div class="ps-shopping__header">
 
-                        <?php 
-                            $all_products = mysqli_query($connect,"SELECT products_id  FROM products, sub_categories WHERE id_categories = products_sub_categories AND id_categories = '".$_GET['id']."'") or die(db_conn_error);
+                        <?php
+                            $all_products = mysqli_query($connect,"SELECT * FROM sub_categories WHERE id_categories = '".mysqli_real_escape_string($connect, $_GET['id'])."'") or die(db_conn_error);
                           
                         ?>
 
@@ -69,7 +69,7 @@ $statement = 'products WHERE id_categories = '.$_GET['id'].' ORDER BY id_sub_cat
                                 </div>
                                 <div class="ps-pagination">
 
-                                <?php echo pagination($statement,$per_page,$page,$url=GEN_WEBSITE.'/sub-categories.php?id='.$_GET['id'].'&'); ?>
+                                <?php echo pagination($statement,$per_page,$page,$url=GEN_WEBSITE.'/products-sub-categories.php?id='.$_GET['id'].'&'); ?>
 
                                     <!-- <ul class="pagination">
                                         <li class="active"><a href="#">1</a></li>

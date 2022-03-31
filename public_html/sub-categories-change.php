@@ -139,7 +139,7 @@ if(isset($confirm) AND $confirm == 1){
                         <div class="ps-section__right">
                             <form class="ps-form--account-setting" action="" method="POST">
                                 <div class="ps-form__header">
-                                    <h3> Add sub categories</h3>
+                                    <h3> Modify sub categories</h3>
                                 </div>
                                 <div class="ps-form__content">
                                      <div class="form-group">

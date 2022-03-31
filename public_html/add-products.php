@@ -398,6 +398,10 @@ include ('../incs-template1/header.php');
 
 
 
+
+                                
+
+
                         <div class="row">
 
 
@@ -531,3 +535,63 @@ include ('../incs-template1/header.php');
 
 
 <?php include ('../incs-template1/footer.php'); ?>
+
+
+
+<body>
+<div class="container mt-5">
+<div class="row justify-content-center">
+<div class="col-md-8">
+<div class="card">
+<div class="card-header">
+<h2 class="text-primary">Dynamic Dropdown Category Subcategory List in PHP MySQL using ajax - Tutsmake.COM</h2>
+</div>
+<div class="card-body">
+<form>
+<div class="form-group">
+<label for="CATEGORY-DROPDOWN">Category</label>
+<select class="form-control" id="category-dropdown">
+<option value="">Select Category</option>
+<?php
+
+$res = mysqli_query($connect,"SELECT * FROM products_categories");
+while($row = mysqli_fetch_array($res)) {
+?>
+<option value="<?php echo $row['products_categories_id'];?>"><?php echo $row["products_categories_name"];?></option>
+<?php
+}
+?>
+</select>
+</div>
+<div class="form-group">
+<label for="SUBCATEGORY">Sub Category</label>
+<select class="form-control" id="sub-category-dropdown">
+</select>
+</div>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+$(document).ready(function() {
+$('#category-dropdown').on('change', function() {
+var category_id = this.value;
+$.ajax({
+url: "fetch-subcategory-by-category.php",
+type: "POST",
+data: {
+category_id: category_id
+},
+cache: false,
+success: function(result){
+$("#sub-category-dropdown").html(result);
+}
+});
+});
+});
+</script>
+</body>
+
+

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2022 at 12:48 AM
+-- Generation Time: Mar 31, 2022 at 04:22 PM
 -- Server version: 10.4.19-MariaDB
 -- PHP Version: 7.4.19
 
@@ -80,7 +80,10 @@ INSERT INTO `inventory` (`inventory_id`, `inventory_product_id`, `inventory_valu
 (11, 13, 1, 0, '2022-03-28 17:25:06'),
 (12, 14, 1, 0, '2022-03-28 17:25:19'),
 (13, 15, 1, 0, '2022-03-28 17:25:31'),
-(14, 16, 1, 0, '2022-03-28 17:28:04');
+(14, 16, 1, 0, '2022-03-28 17:28:04'),
+(15, 17, 1, 0, '2022-03-31 11:30:30'),
+(16, 18, 1, 0, '2022-03-31 11:30:54'),
+(17, 19, 1, 0, '2022-03-31 11:31:24');
 
 -- --------------------------------------------------------
 
@@ -147,18 +150,18 @@ CREATE TABLE `products` (
   `products_short_description` varchar(255) NOT NULL,
   `products_long_description` text NOT NULL,
   `products_image` varchar(255) NOT NULL DEFAULT 'default.jpg',
-  `products_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `products_timestamp` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `real_sub_categories` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`products_id`, `products_name`, `products_price`, `products_sales_price`, `products_sub_categories`, `products_promo`, `products_deals`, `products_new_arrivals`, `products_best_sellers`, `products_popular`, `products_short_description`, `products_long_description`, `products_image`, `products_timestamp`) VALUES
-(8, 'pencil', '3000', '1500', 1, '0', 'Deals of the day', '0', '0', '0', '', '', 'default.jpg', '2022-03-28 13:13:44'),
-(13, 'goat', '500', '', 1, '0', 'Deals of the day', '0', '0', '0', '', '', 'default.jpg', '2022-03-28 17:25:06'),
-(15, 'pork', '600', '', 1, '0', 'Deals of the day', '0', '0', '0', '', '', 'default.jpg', '2022-03-28 17:25:31'),
-(16, 'meat', '4000', '', 1, '0', 'Deals of the day', '0', '0', '0', '', '', 'default.jpg', '2022-03-28 17:28:04');
+INSERT INTO `products` (`products_id`, `products_name`, `products_price`, `products_sales_price`, `products_sub_categories`, `products_promo`, `products_deals`, `products_new_arrivals`, `products_best_sellers`, `products_popular`, `products_short_description`, `products_long_description`, `products_image`, `products_timestamp`, `real_sub_categories`) VALUES
+(17, 'Shirt', '5000', '4000', 2, 'Hot promotion', 'Deals of the day', '0', '0', '0', '', '', 'default.jpg', '2022-03-31 11:30:30', 0),
+(18, 'Shoes', '6000', '', 2, 'Hot promotion', 'Deals of the day', '0', '0', '0', '', '', 'default.jpg', '2022-03-31 11:30:54', 0),
+(19, 'Perfume', '5000', '', 3, '0', 'Deals of the day', 'New arrivals', '0', '0', '', '', 'default.jpg', '2022-03-31 11:31:24', 0);
 
 -- --------------------------------------------------------
 
@@ -178,7 +181,8 @@ CREATE TABLE `products_categories` (
 
 INSERT INTO `products_categories` (`products_categories_id`, `products_categories_name`, `products_categories_timestamp`) VALUES
 (1, 'Uncategorized', '2022-03-16 15:07:25'),
-(2, 'cloth', '2022-03-28 15:59:40');
+(2, 'cloth', '2022-03-28 15:59:40'),
+(3, 'Perfumes', '2022-03-31 10:04:56');
 
 -- --------------------------------------------------------
 
@@ -243,7 +247,9 @@ CREATE TABLE `sub_categories` (
 --
 
 INSERT INTO `sub_categories` (`id_sub_categories`, `id_categories`, `sub_categories_name`, `sub_timestamp`) VALUES
-(3, 2, 'rwasdgf', '2022-03-30 17:42:42');
+(3, 2, 'Accessories', '2022-03-30 17:42:42'),
+(4, 2, 'Men clothings', '2022-03-31 10:09:50'),
+(6, 3, 'Men Perfume', '2022-03-31 11:59:05');
 
 -- --------------------------------------------------------
 
@@ -359,7 +365,7 @@ ALTER TABLE `banner`
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `inventory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `inventory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -371,13 +377,13 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `products_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `products_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `products_categories`
 --
 ALTER TABLE `products_categories`
-  MODIFY `products_categories_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `products_categories_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `shop_slider_banner`
@@ -395,7 +401,7 @@ ALTER TABLE `slider_banner`
 -- AUTO_INCREMENT for table `sub_categories`
 --
 ALTER TABLE `sub_categories`
-  MODIFY `id_sub_categories` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_sub_categories` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `top_banner`
