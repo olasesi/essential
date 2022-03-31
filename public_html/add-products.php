@@ -60,6 +60,11 @@ if (preg_match ('/^[0-9]{1,4}$/i', trim($_POST['inventory'])) || empty(trim($_PO
     }
 
 
+    if(isset($_POST['select_sub_cat'])){
+       $select_sub_cat = $_POST['select_sub_cat'];
+    }
+    
+
 
     if (isset($_POST['hot_promo'])) {
         $hot_promo = $_POST['hot_promo'];
@@ -104,16 +109,16 @@ if (preg_match ('/^[0-9]{1,4}$/i', trim($_POST['inventory'])) || empty(trim($_PO
 		$errors['long'] = 'Character is longer than 1000 ';
 	} 
 
-
+if(isset($_POST['deals_of_the_day'])){
     $num_deals = mysqli_query($connect, "SELECT products_deals FROM products WHERE products_deals = 'Deals of the day'") or die(db_conn_error);
 
-    if(mysqli_num_rows($num_deals) > 3) {
+    if(mysqli_num_rows($num_deals) >= 12) {
 
         $errors['toomuch'] = 'products under deals of the day cannot be more than 12';
         
     }
  
- 
+}
     if (is_uploaded_file($_FILES['product_image']['tmp_name']) AND $_FILES['product_image']['error'] == UPLOAD_ERR_OK){ 
          
         if($_FILES['product_image']['size'] > 2097152){ 		//conditions for the file size 2MB
@@ -165,9 +170,9 @@ if (preg_match ('/^[0-9]{1,4}$/i', trim($_POST['inventory'])) || empty(trim($_PO
         }
 
     $image_uploaded= (isset($_SESSION['images']['new_name']))?$_SESSION['images']['new_name']:'default.jpg';
-
-    mysqli_query($connect,"INSERT INTO products(products_name, products_price, products_sales_price, products_sub_categories, products_promo, products_deals,products_new_arrivals, products_best_sellers, products_popular, products_short_description, products_long_description, products_image) 
-    VALUES ('".$products_name."','".$products_price."','".$products_sales_price."','".$cat."','".$hot_promo."','".$deals_of_the_day."','".$new_arrivals."','".$best_sellers."','".$most_popular."','".$products_desc_short."','".$products_desc_long."', '".$image_uploaded."')") or die(db_conn_error);
+    $ter_sub_cat = (isset($select_sub_cat))?$select_sub_cat:'0';
+    mysqli_query($connect,"INSERT INTO products(products_name, products_price, products_sales_price, products_sub_categories, products_promo, products_deals,products_new_arrivals, products_best_sellers, products_popular, products_short_description, products_long_description, products_image, real_sub_categories) 
+    VALUES ('".$products_name."','".$products_price."','".$products_sales_price."','".$cat."','".$hot_promo."','".$deals_of_the_day."','".$new_arrivals."','".$best_sellers."','".$most_popular."','".$products_desc_short."','".$products_desc_long."', '".$image_uploaded."', '".$ter_sub_cat."')") or die(db_conn_error);
     if (mysqli_affected_rows($connect) == 1) {
         
         mysqli_query($connect,"INSERT INTO inventory(inventory_product_id,inventory_value) VALUES ( '". mysqli_insert_id($connect)."','".$inventory."')") or die(db_conn_error);
@@ -356,11 +361,11 @@ include ('../incs-template1/header.php');
 
 
                                         
-                                         <div class="col-sm-6">
+                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <label>Products sub/categories<span style="color:red;">*</span></label>
+                                                <label>Products categories<span style="color:red;">*</span></label>
                                                
-                                                <select class="form-control" name="products_categories">
+                                                <select class="form-control" name="products_categories" id="category-dropdown">
                                                 
                                                     
                                              
@@ -392,6 +397,20 @@ include ('../incs-template1/header.php');
    </div>
       
                                         </div> 
+
+
+
+
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label>Products sub-categories</label>
+                                        <select class="form-control" id="sub-category-dropdown" name="select_sub_cat">
+                                        </select>
+                                        </div>
+                                    </div>
+
+
+
 
                                     </div>
                                 </div>
@@ -525,61 +544,13 @@ include ('../incs-template1/header.php');
       
     </main>
 
-
-
-
-
-
-
-
-
-
 <?php include ('../incs-template1/footer.php'); ?>
-
-
-
-<body>
-<div class="container mt-5">
-<div class="row justify-content-center">
-<div class="col-md-8">
-<div class="card">
-<div class="card-header">
-<h2 class="text-primary">Dynamic Dropdown Category Subcategory List in PHP MySQL using ajax - Tutsmake.COM</h2>
-</div>
-<div class="card-body">
-<form>
-<div class="form-group">
-<label for="CATEGORY-DROPDOWN">Category</label>
-<select class="form-control" id="category-dropdown">
-<option value="">Select Category</option>
-<?php
-
-$res = mysqli_query($connect,"SELECT * FROM products_categories");
-while($row = mysqli_fetch_array($res)) {
-?>
-<option value="<?php echo $row['products_categories_id'];?>"><?php echo $row["products_categories_name"];?></option>
-<?php
-}
-?>
-</select>
-</div>
-<div class="form-group">
-<label for="SUBCATEGORY">Sub Category</label>
-<select class="form-control" id="sub-category-dropdown">
-</select>
-</div>
-</form>
-</div>
-</div>
-</div>
-</div>
-</div>
 <script>
 $(document).ready(function() {
 $('#category-dropdown').on('change', function() {
 var category_id = this.value;
 $.ajax({
-url: "fetch-subcategory-by-category.php",
+url: "../incs-template1/fetch-subcategory-by-category.php",
 type: "POST",
 data: {
 category_id: category_id
@@ -592,6 +563,6 @@ $("#sub-category-dropdown").html(result);
 });
 });
 </script>
-</body>
+
 
 

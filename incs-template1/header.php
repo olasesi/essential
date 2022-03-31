@@ -167,7 +167,7 @@ echo'
                                 <span class="sub-toggle"></span>
                                 ';
                 
-                                     $query_select_subcategory =  mysqli_query($connect, "SELECT id_categories, sub_categories_name FROM sub_categories WHERE id_categories = '" . $while_product_cat['products_categories_id'] . "'") or die(mysqli_error($connect));
+                                     $query_select_subcategory =  mysqli_query($connect, "SELECT id_sub_categories, id_categories, sub_categories_name FROM sub_categories WHERE id_categories = '" . $while_product_cat['products_categories_id'] . "'") or die(mysqli_error($connect));
                                            echo '
                                     <div class="';
                                    $counting_sub = mysqli_query($connect, "SELECT id_sub_categories FROM sub_categories WHERE id_categories = '" . $while_product_cat['products_categories_id'] . "'") or die(mysqli_error($connect));
@@ -183,7 +183,7 @@ echo'
                                     while ($while_subcategory_cat = mysqli_fetch_array($query_select_subcategory)) {
                                         echo '    
                                             <ul class="mega-menu__list" >
-                                                <li><a href="products-sub-categories.php?id=' . $while_subcategory_cat['id_categories'] . '">' . $while_subcategory_cat['sub_categories_name'] . '</a> </li>
+                                                <li><a href="products-sub-categories.php?id=' . $while_subcategory_cat['id_sub_categories'] . '">' . $while_subcategory_cat['sub_categories_name'] . '</a> </li>
                                             </ul>     
                                     ';
                                     }

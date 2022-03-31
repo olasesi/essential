@@ -15,7 +15,7 @@ if(!isset($_GET['id'])){
 }
 ?>
 <?php
-$query_page_section =  mysqli_query($connect, "SELECT * FROM inventory,products WHERE products_id = '".mysqli_real_escape_string ($connect, $_GET['id'])."' AND inventory_product_id =  '".mysqli_real_escape_string ($connect, $_GET['id'])."' ") or die(db_conn_error);
+$query_page_section =  mysqli_query($connect, "SELECT * FROM inventory,products WHERE products_id = '".mysqli_real_escape_string ($connect, $_GET['id'])."' AND inventory_product_id =  '".mysqli_real_escape_string ($connect, $_GET['id'])."'") or die(db_conn_error);
 
 while($row_cat = mysqli_fetch_array($query_page_section)){
     $products_name=$row_cat['products_name'];
@@ -31,6 +31,8 @@ while($row_cat = mysqli_fetch_array($query_page_section)){
     $products_long_description=$row_cat['products_long_description'];
     $products_image=$row_cat['products_image'];
     $inventory_value=$row_cat['inventory_value'];
+    $real_sub_categories=$row_cat['real_sub_categories'];
+
 }
 
 
@@ -90,6 +92,9 @@ if (preg_match ('/^[0-9]{1,4}$/i', trim($_POST['inventory']))) {
     $cat = $_POST['products_categories'];
     }
 
+    if(isset($_POST['sub_products_categories'])){
+        $select_sub_cat = $_POST['sub_products_categories'];
+     }
 
 
     if (isset($_POST['hot_promo'])) {
@@ -141,10 +146,10 @@ $most_popular = 0 ;
      //now to edit the product	
      if (empty($errors)){
  
-       
+        $ter_sub_cat = (isset($select_sub_cat))?$select_sub_cat:'0';  
+        
 
-
-mysqli_query($connect, "UPDATE products SET products_name='".$products_name."', products_price = '".$products_price."', products_sales_price = '".$products_sales_price."' , products_sub_categories = '".$cat."', products_promo = '".$hot_promo."', products_deals = '".$deals_of_the_day."', products_new_arrivals = '".$new_arrivals."', products_best_sellers = '".$best_sellers."', products_popular = '".$most_popular."', products_short_description = '".$products_desc_short."', products_long_description= '".$products_desc_long."' WHERE products_id  = '".mysqli_real_escape_string ($connect, $_GET['id'])."'") or die(db_conn_error);
+mysqli_query($connect, "UPDATE products SET products_name='".$products_name."', products_price = '".$products_price."', products_sales_price = '".$products_sales_price."' , products_sub_categories = '".$cat."', products_promo = '".$hot_promo."', products_deals = '".$deals_of_the_day."', products_new_arrivals = '".$new_arrivals."', products_best_sellers = '".$best_sellers."', products_popular = '".$most_popular."', products_short_description = '".$products_desc_short."', products_long_description= '".$products_desc_long."', real_sub_categories = '".$ter_sub_cat."' WHERE products_id  = '".mysqli_real_escape_string ($connect, $_GET['id'])."'") or die(db_conn_error);
     if (mysqli_affected_rows($connect) == 1) {
         
    
@@ -392,11 +397,11 @@ $image_uploaded = (isset($_SESSION['images']['new_name']))?$_SESSION['images']['
 
 
                                         
-                                         <div class="col-sm-6">
+                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <label>Products sub/categories<span style="color:red;">*</span></label>
+                                                <label>Products categories<span style="color:red;">*</span></label>
                                                
-                                                <select class="form-control" name="products_categories">
+                                                <select class="form-control" name="products_categories" id="category-dropdown">
                                                 
                                                     
                                              
@@ -442,6 +447,66 @@ if(isset ($_POST['products_categories'])){
    </div>
       
                                         </div> 
+
+
+
+
+
+
+
+                                         
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label>Products sub-categories</label>
+                                               
+                                                <select class="form-control" name="sub_products_categories" id = "sub-category-dropdown">
+                                                
+                                                     <?php        
+                         $products_cat_select_sub = mysqli_query($connect, "SELECT sub_categories_name, id_sub_categories FROM sub_categories") or die(db_conn_error);
+
+if(isset ($_POST['products_categories'])){
+                      
+                        while($while_products_cat_sub = mysqli_fetch_array($products_cat_select_sub)){
+                          
+                            echo '<option value="'.$while_products_cat_sub['id_sub_categories'].'">'.$while_products_cat_sub['products_categories_name'].'</option>';
+ 
+                        }  
+                    }else{
+                       
+                        while($while_products_cat_sub = mysqli_fetch_array($products_cat_select_sub)){
+                            $selected = ($while_products_cat_sub['id_sub_categories'] == $real_sub_categories)?'selected="selected"':'';
+                            
+                            echo '<option value="'.$while_products_cat_sub['id_sub_categories'].'" '.$selected.'>'.$while_products_cat_sub['products_categories_name'].'</option>';
+ 
+
+                    }
+                }
+                       
+                        ?>            
+                      
+      
+ </select>
+
+
+   </div>
+      
+                                        </div> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                                     </div>
                                 </div>
@@ -623,28 +688,7 @@ if(isset ($_POST['products_categories'])){
                 </div>
             </div>
         </section>
-        <!-- <div class="ps-newsletter">
-            <div class="ps-container">
-                <form class="ps-form--newsletter" action="do_action" method="post">
-                    <div class="row">
-                        <div class="col-xl-5 col-lg-12 col-md-12 col-sm-12 col-12 ">
-                            <div class="ps-form__left">
-                                <h3>Newsletter</h3>
-                                <p>Subcribe to get information about products and coupons</p>
-                            </div>
-                        </div>
-                        <div class="col-xl-7 col-lg-12 col-md-12 col-sm-12 col-12 ">
-                            <div class="ps-form__right">
-                                <div class="form-group--nest">
-                                    <input class="form-control" type="email" placeholder="Email address">
-                                    <button class="ps-btn">Subscribe</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div> -->
+       
     </main>
 
 
@@ -657,3 +701,22 @@ if(isset ($_POST['products_categories'])){
 
 
 <?php include ('../incs-template1/footer.php'); ?>
+
+<script>
+$(document).ready(function() {
+$('#category-dropdown').on('change', function() {
+var category_id = this.value;
+$.ajax({
+url: "../incs-template1/fetch-edit-subcategory-by-category.php",
+type: "POST",
+data: {
+category_id: category_id
+},
+cache: false,
+success: function(result){
+$("#sub-category-dropdown").html(result);
+}
+});
+});
+});
+</script>

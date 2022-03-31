@@ -16,7 +16,7 @@ include ('../incs-template1/header.php'); ?>
 
 <?php 
 include ('../incs-template1/paginate.php');
-$statement = 'products WHERE id_categories = '.$_GET['id'].' ORDER BY id_sub_categories  DESC'; 
+$statement = 'products WHERE real_sub_categories = "'.$_GET['id'].'" ORDER BY products_id DESC'; 
 
 ?>	
 
@@ -62,7 +62,7 @@ $statement = 'products WHERE id_categories = '.$_GET['id'].' ORDER BY id_sub_cat
                                 <div class="ps-shopping-product">
                                     <div class="row">
                                         <?php 
-                include ('../incs-template1/products.php');
+                include ('../incs-template1/products-subcat.php');
 ?>
                                        
                                     </div>
