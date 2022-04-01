@@ -168,6 +168,7 @@ if(isset($_POST['deals_of_the_day'])){
             }	
 
         }
+        
 
     $image_uploaded= (isset($_SESSION['images']['new_name']))?$_SESSION['images']['new_name']:'default.jpg';
     $ter_sub_cat = (isset($select_sub_cat))?$select_sub_cat:'0';
