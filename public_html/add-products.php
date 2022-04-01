@@ -107,7 +107,7 @@ if (preg_match ('/^[0-9]{1,4}$/i', trim($_POST['inventory'])) || empty(trim($_PO
 
     $num_deals = mysqli_query($connect, "SELECT products_deals FROM products WHERE products_deals = 'Deals of the day'") or die(db_conn_error);
 
-    if(mysqli_num_rows($num_deals) >= 9) {
+    if(mysqli_num_rows($num_deals) >= 3) {
 
         $errors['toomuch'] = 'products under deals of the day cannot be more than 12';
         
