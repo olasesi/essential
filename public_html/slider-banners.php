@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit'])){
      if (empty($errors)){
  
        
-         $new_name= (string) sha1($_FILES['slider_banner']['name'] . uniqid('',true));
+            $new_name= (string) sha1($_FILES['slider_banner']['name'] . uniqid('',true));
              $new_name .= ((substr($ext, 0, 1) != '.') ? ".{$ext}" : $ext);
              $dest = "images/sliders/".$new_name;
              
@@ -58,16 +58,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit'])){
              $_SESSION['images']['new_name'] = $new_name;
              $_SESSION['images']['file_name'] = $_FILES['slider_banner']['name'];
              
-      
- 
- mysqli_query($connect, "UPDATE slider_banner SET slider_banner_image='".$new_name."' WHERE slider_banner_name = '".$slider_banner."'") or die(db_conn_error);
-             if (mysqli_affected_rows($connect) == 1) {
+
              
-             $_POST = array();		
-             $_FILES = array();
+             mysqli_query($connect, "UPDATE slider_banner SET slider_banner_image='".$new_name."' WHERE slider_banner_name = '".$slider_banner."'") or die(db_conn_error);
+             
+             if (mysqli_affected_rows($connect) == 1) {
                  
-             unset($_FILES['slider_banner'], $_SESSION['images']);
-             header('Location:'.GEN_WEBSITE);
+                 $_POST = array();		
+                 $_FILES = array();
+                 
+                unset($_FILES['slider_banner'], $_SESSION['images']);
+            header('Location:'.GEN_WEBSITE);
              exit();
             
              
