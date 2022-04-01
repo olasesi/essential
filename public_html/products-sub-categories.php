@@ -32,10 +32,10 @@ $statement = 'products WHERE real_sub_categories = "'.$_GET['id'].'" ORDER BY pr
                         <ul class="ps-list--categories">
 
                         <?php  
-                            $query_page_section =  mysqli_query($connect, "SELECT id_categories, sub_categories_name FROM sub_categories") or die(db_conn_error);
+                            $query_page_section =  mysqli_query($connect, "SELECT id_sub_categories, sub_categories_name FROM sub_categories") or die(db_conn_error);
 
                             while($row_cat = mysqli_fetch_array($query_page_section)){
-                                echo  '<li><a href="products-sub-categories.php?id='.$row_cat['id_categories'].'">'.$row_cat['sub_categories_name'].'</a>
+                                echo  '<li><a href="products-sub-categories.php?id='.$row_cat['id_sub_categories'].'">'.$row_cat['sub_categories_name'].'</a>
                                 </li>';
 
                             }
@@ -50,7 +50,7 @@ $statement = 'products WHERE real_sub_categories = "'.$_GET['id'].'" ORDER BY pr
                         <div class="ps-shopping__header">
 
                         <?php
-                            $all_products = mysqli_query($connect,"SELECT * FROM sub_categories WHERE id_categories = '".mysqli_real_escape_string($connect, $_GET['id'])."'") or die(db_conn_error);
+                            $all_products = mysqli_query($connect,"SELECT * FROM products WHERE real_sub_categories  = '".mysqli_real_escape_string($connect, $_GET['id'])."'") or die(db_conn_error);
                           
                         ?>
 

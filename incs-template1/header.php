@@ -161,9 +161,9 @@ echo'
                                 <?php
                                 $query_select_products_cat =  mysqli_query($connect, "SELECT products_categories_id, products_categories_name FROM products_categories") or die(mysqli_error($connect));
 
-                                while ($while_product_cat = mysqli_fetch_array($query_select_products_cat)) {
+                                while ($while_product_cat = mysqli_fetch_array($query_select_products_cat)){
                                     echo '<li class="menu-item-has-children has-mega-menu">
-                                <a href="categories.php?id=' . $while_product_cat['products_categories_id'] . '" >' . $while_product_cat['products_categories_name'] . '</a>
+                                <a href="categories.php?id=' . $while_product_cat['products_categories_id'] . '">' . $while_product_cat['products_categories_name'] . '</a>
                                 <span class="sub-toggle"></span>
                                 ';
                 
@@ -182,7 +182,7 @@ echo'
                                    ';
                                     while ($while_subcategory_cat = mysqli_fetch_array($query_select_subcategory)) {
                                         echo '    
-                                            <ul class="mega-menu__list" >
+                                            <ul class="mega-menu__list">
                                                 <li><a href="products-sub-categories.php?id=' . $while_subcategory_cat['id_sub_categories'] . '">' . $while_subcategory_cat['sub_categories_name'] . '</a> </li>
                                             </ul>     
                                     ';
