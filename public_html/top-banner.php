@@ -115,8 +115,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit'])){
     }
   }
 
-  //TODO
-  //remove uploaded from folder
 
 
 

@@ -81,7 +81,7 @@ $data_select = mysqli_select_db($connect,'essential') or die(db_conn_error);
 
 
 
-define("GEN_WEBSITE","http://localhost/essential".$website_name);      //Enter your website name eg www.designsbyblocks.com.ng.
+define("GEN_WEBSITE","http://localhost:88/essential".$website_name);      //Enter your website name eg www.designsbyblocks.com.ng.
 define("SITE_NAME_NO_WWW", $website_name_with_spaces); //Enter the name of your website logo eg designs by blocks.
 define("TITLE", $website_name_with_spaces);            //Enter your website title eg welcome to designs by blocks.
 

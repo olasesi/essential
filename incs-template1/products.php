@@ -69,19 +69,30 @@ echo '
                     <option value="1">4</option>
                     <option value="1">5</option>
                 </select>
-            </div>
-            <p class="ps-product__price sale">'; if(!empty($rows_loop['products_sales_price'])){
-                echo '&#8358;'.number_format($rows_loop['products_sales_price']).' ' . '<del>'.'&#8358;'.number_format($rows_loop['products_price']) .'</del>';
-            } 
+            </div>';
+             if(!empty($rows_loop['products_sales_price'])){
+                echo '<p class="ps-product__price sale">
+                     &#8358;'.number_format($rows_loop['products_sales_price']).' ' . '<del>'.'&#8358;'.number_format($rows_loop['products_price']) .'</del>
+                    </p>';
+            } else {
+                echo '<p class="ps-product__price">
+                &#8358;'.number_format($rows_loop['products_price']).'</p>';
+            }
             
-            echo '</p>
+            echo '
             
         </div>
-            <div class="ps-product__content hover"><a class="ps-product__title" href="product-description.php?id='.$rows_loop['products_id'].'">'.$rows_loop['products_name'].'</a>
-                <p class="ps-product__price sale">'; if(!empty($rows_loop['products_sales_price'])){
-                    echo '&#8358;'.number_format($rows_loop['products_sales_price']).' ' . '<del>'.'&#8358;'.number_format($rows_loop['products_price']) .'</del>';
-                } 
-            echo ' </p>
+            <div class="ps-product__content hover"><a class="ps-product__title" href="product-description.php?id='.$rows_loop['products_id'].'">'.$rows_loop['products_name'].'</a>';
+            if(!empty($rows_loop['products_sales_price'])){
+                echo '<p class="ps-product__price sale">
+                     &#8358;'.number_format($rows_loop['products_sales_price']).' ' . '<del>'.'&#8358;'.number_format($rows_loop['products_price']) .'</del>
+                    </p>';
+            } else {
+                echo '<p class="ps-product__price">
+                &#8358;'.number_format($rows_loop['products_price']).'</p>';
+            }
+            
+            echo '
                     
             </div>
             
