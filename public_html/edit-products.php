@@ -88,6 +88,7 @@ if (preg_match ('/^[0-9]{1,4}$/i', trim($_POST['inventory']))) {
 
  if ($_POST['products_categories'] == 'Choose categories') {
         $errors['products_categories'] = 'Please select a category';
+       echo $_POST['products_categories'];
     } else{
     $cat = $_POST['products_categories'];
     }
@@ -479,14 +480,26 @@ if(isset ($_POST['products_categories'])){
  
                         }  
                     }else{
-                       
-                        while($while_products_cat_sub = mysqli_fetch_array($products_cat_select_sub)){
-                            $selected = ($while_products_cat_sub['id_sub_categories'] == $real_sub_categories)?'selected="selected"':'';
-                            
-                            echo '<option value="'.$while_products_cat_sub['id_sub_categories'].'" '.$selected.'>'.$while_products_cat_sub['products_categories_name'].'</option>';
- 
+                        if($real_sub_categories == 0){ 
+                            echo '<option selected="selected">Select sub-category</option>'; 
+                            while($while_products_cat_sub = mysqli_fetch_array($products_cat_select_sub)){
+                                echo '<option value="'.$while_products_cat_sub['id_sub_categories'].'">'.$while_products_cat_sub['products_categories_name'].'</option>';
 
-                    }
+
+                            } 
+                        }else{
+                            while($while_products_cat_sub = mysqli_fetch_array($products_cat_select_sub)){
+
+                                $selected = ($while_products_cat_sub['id_sub_categories'] == $real_sub_categories)?'selected="selected"':'';
+                            
+                                echo '<option value="'.$while_products_cat_sub['id_sub_categories'].'" '.$selected.'>'.$while_products_cat_sub['products_categories_name'].'</option>';
+                            }
+
+
+                        }
+
+
+
                 }
                        
                         ?>            

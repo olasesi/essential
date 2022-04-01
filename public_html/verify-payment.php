@@ -31,10 +31,13 @@ if (array_key_exists('data', $result) && array_key_exists('status', $result['dat
 	
     foreach($_SESSION['shopping_cart'] as $c => $cs){
 		$adding = $cs['inventory_value_prev'];
-		$sub = intval(substr($cs['code'], 4));
+		$sub = substr($cs['code'], 4);
 		
-		mysqli_query($connect, "UPDATE `inventory` SET `inventory_value_prev` = `inventory_value_prev` + '".$adding."'
-		WHERE `inventory_product_id` = '".$sub."'") or die(mysqli_error($connect));
+		
+$select = mysqli_query($connect, "SELECT products_categories_name, products_categories_id FROM products_categories") or die(db_conn_error);
+
+//mysqli_query($connect, "UPDATE `inventory` SET `inventory_value_prev` = `inventory_value_prev` + '".$adding."'
+		//WHERE `inventory_product_id` = '".$sub."'") or die(mysqli_error($connect));
 
 	   } 
   
