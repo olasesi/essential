@@ -6,7 +6,7 @@ $category_id = $_POST["category_id"];
 $result = mysqli_query($connect,"SELECT * FROM sub_categories WHERE id_categories = $category_id");
 ?>
 <?php
-if(mysqli_num_rows($result == 0)){
+if($category_id != 1){
     echo '<option value="">Select sub-category</option>';
 }
 ?>
