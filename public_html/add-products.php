@@ -60,8 +60,11 @@ if (preg_match ('/^[0-9]{1,4}$/i', trim($_POST['inventory'])) || empty(trim($_PO
     }
 
 
-    if(isset($_POST['select_sub_cat'])){
-       $select_sub_cat = $_POST['select_sub_cat'];
+    if($_POST['select_sub_cat'] == 'Select sub-category'){
+       $select_sub_cat = 0;
+    }else{
+
+        $select_sub_cat =  $_POST['select_sub_cat']; 
     }
     
 
@@ -168,7 +171,7 @@ if(isset($_POST['deals_of_the_day'])){
             }	
 
         }
-        
+
 
     $image_uploaded= (isset($_SESSION['images']['new_name']))?$_SESSION['images']['new_name']:'default.jpg';
     $ter_sub_cat = (isset($select_sub_cat))?$select_sub_cat:'0';

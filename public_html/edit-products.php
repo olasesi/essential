@@ -92,9 +92,16 @@ if (preg_match ('/^[0-9]{1,4}$/i', trim($_POST['inventory']))) {
     $cat = $_POST['products_categories'];
     }
 
-    if(isset($_POST['sub_products_categories'])){
-        $select_sub_cat = $_POST['sub_products_categories'];
+   
+
+     if($_POST['sub_products_categories'] == 'Select sub-category'){
+        $sub_products_categories = 0;
+     }else{
+ 
+         $sub_products_categories =  $_POST['sub_products_categories']; 
      }
+
+
 
 
     if (isset($_POST['hot_promo'])) {
