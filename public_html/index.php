@@ -213,7 +213,7 @@ if(isset($_SESSION['user_id'])){
                                     <div class="progress-bar" role="progressbar" style="width: '.(100-100*$rows_loop['inventory_value_prev']/$rows_loop['inventory_value']).'%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
                                    
-                                    <p>'.($rows_loop['inventory_value'] - $rows_loop['inventory_value_prev']).' itemgit  is left</p>
+                                    <p>'.($rows_loop['inventory_value'] - $rows_loop['inventory_value_prev']).' item is left</p>
                                 </div>
                 
                             </div>
