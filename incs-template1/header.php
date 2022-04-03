@@ -108,7 +108,7 @@ echo'
                                     while ($while_subcategory_cat = mysqli_fetch_array($query_select_subcategory)) {
                                         echo '    
                                             <ul class="mega-menu__list">
-                                                <li><a href="products-sub-categories.php?id=' . $while_subcategory_cat['id_sub_categories'] . '">' . $while_subcategory_cat['sub_categories_name'] . '</a> </li>
+                                                <li><a href="sub-categories.php?id=' . $while_subcategory_cat['id_sub_categories'] . '">' . $while_subcategory_cat['sub_categories_name'] . '</a> </li>
                                             </ul>     
                                     ';
                                     }
@@ -206,7 +206,7 @@ echo'
                                     while ($while_subcategory_cat = mysqli_fetch_array($query_select_subcategory)) {
                                         echo '    
                                             <ul class="mega-menu__list">
-                                                <li><a href="products-sub-categories.php?id=' . $while_subcategory_cat['id_sub_categories'] . '">' . $while_subcategory_cat['sub_categories_name'] . '</a> </li>
+                                                <li><a href="sub-categories.php?id=' . $while_subcategory_cat['id_sub_categories'] . '">' . $while_subcategory_cat['sub_categories_name'] . '</a> </li>
                                             </ul>     
                                     ';
                                     }

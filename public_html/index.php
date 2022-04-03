@@ -209,11 +209,11 @@ if(isset($_SESSION['user_id'])){
                                 
 
                                 <div class="ps-product__progress-bar ps-progress" data-value="100">
-                                <div class="progress" style="height: 20px;">
-                                    <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                <div class="progress" style="height: 10px;">
+                                    <div class="progress-bar" role="progressbar" style="width: '.(100-100*$rows_loop['inventory_value_prev']/$rows_loop['inventory_value']).'%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
-                                    <div class="ps-progress__value"><span></span></div>
-                                    <p>'.$rows_loop['inventory_value'].'</p>
+                                   
+                                    <p>'.($rows_loop['inventory_value'] - $rows_loop['inventory_value_prev']).' product is left</p>
                                 </div>
                 
                             </div>

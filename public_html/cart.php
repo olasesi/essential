@@ -103,7 +103,7 @@ if (isset($_POST['action']) && $_POST['action']=="change"){
                                     $result = mysqli_query($connect,"SELECT inventory_value, inventory_value_prev FROM inventory WHERE 	inventory_product_id='". substr($product["code"], 4)."'") or die(mysqli_error($connect));
                                 while($deduct = mysqli_fetch_array($result)){
 
-if(isset($_POST['quantity'])){
+                          if(isset($_POST['quantity'])){
                             if($_POST['quantity'] > ($deduct['inventory_value'] - $deduct['inventory_value_prev'])){
                                       echo '<p class="text-danger">Maximum of '.($deduct['inventory_value'] - $deduct['inventory_value_prev']). ' quantity can be added </p>';
                                       $error_on_number = 'Enter products less than '.($deduct['inventory_value'] - $deduct['inventory_value_prev']);
