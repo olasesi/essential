@@ -15,7 +15,7 @@ if(!isset($_GET['id'])){
 }
 ?>
 <?php
-$query_page_section =  mysqli_query($connect, "SELECT * FROM inventory,products WHERE products_id = '".mysqli_real_escape_string ($connect, $_GET['id'])."' AND inventory_product_id =  '".mysqli_real_escape_string ($connect, $_GET['id'])."'") or die(db_conn_error);
+$query_page_section =  mysqli_query($connect, "SELECT * FROM inventory, products WHERE products_id = '".mysqli_real_escape_string ($connect, $_GET['id'])."' AND inventory_product_id =  '".mysqli_real_escape_string ($connect, $_GET['id'])."'") or die(db_conn_error);
 
 while($row_cat = mysqli_fetch_array($query_page_section)){
     $products_name=$row_cat['products_name'];
@@ -88,21 +88,29 @@ if (preg_match ('/^[0-9]{1,4}$/i', trim($_POST['inventory']))) {
 
  if ($_POST['products_categories'] == 'Choose categories') {
         $errors['products_categories'] = 'Please select a category';
+      
     } else{
     $cat = $_POST['products_categories'];
     }
 
    
-
-     if($_POST['sub_products_categories'] == 'Select sub-category'){
+if(isset($_POST['sub_products_categories'])){
+    if($_POST['sub_products_categories'] == 'Select sub-category'){
         $sub_products_categories = 0;
+
      }else{
  
          $sub_products_categories =  $_POST['sub_products_categories']; 
      }
 
+}else{
+    $sub_products_categories = 0;
 
+}
 
+    
+
+    
 
     if (isset($_POST['hot_promo'])) {
         $hot_promo = $_POST['hot_promo'];
@@ -153,10 +161,10 @@ $most_popular = 0 ;
      //now to edit the product	
      if (empty($errors)){
  
-        $ter_sub_cat = (isset($select_sub_cat))?$select_sub_cat:'0';  
+        //$ter_sub_cat = (isset($select_sub_cat))?$select_sub_cat:'0';  
         
 
-mysqli_query($connect, "UPDATE products SET products_name='".$products_name."', products_price = '".$products_price."', products_sales_price = '".$products_sales_price."' , products_sub_categories = '".$cat."', products_promo = '".$hot_promo."', products_deals = '".$deals_of_the_day."', products_new_arrivals = '".$new_arrivals."', products_best_sellers = '".$best_sellers."', products_popular = '".$most_popular."', products_short_description = '".$products_desc_short."', products_long_description= '".$products_desc_long."', real_sub_categories = '".$ter_sub_cat."' WHERE products_id  = '".mysqli_real_escape_string ($connect, $_GET['id'])."'") or die(db_conn_error);
+mysqli_query($connect, "UPDATE products SET products_name='".$products_name."', products_price = '".$products_price."', products_sales_price = '".$products_sales_price."' , products_sub_categories = '".$cat."', products_promo = '".$hot_promo."', products_deals = '".$deals_of_the_day."', products_new_arrivals = '".$new_arrivals."', products_best_sellers = '".$best_sellers."', products_popular = '".$most_popular."', products_short_description = '".$products_desc_short."', products_long_description= '".$products_desc_long."', real_sub_categories = '".$sub_products_categories."' WHERE products_id  = '".mysqli_real_escape_string ($connect, $_GET['id'])."'") or die(db_conn_error);
     if (mysqli_affected_rows($connect) == 1) {
         
    
@@ -479,14 +487,26 @@ if(isset ($_POST['products_categories'])){
  
                         }  
                     }else{
-                       
-                        while($while_products_cat_sub = mysqli_fetch_array($products_cat_select_sub)){
-                            $selected = ($while_products_cat_sub['id_sub_categories'] == $real_sub_categories)?'selected="selected"':'';
-                            
-                            echo '<option value="'.$while_products_cat_sub['id_sub_categories'].'" '.$selected.'>'.$while_products_cat_sub['products_categories_name'].'</option>';
- 
+                        if($real_sub_categories == 0){ 
+                            echo '<option selected="selected">Select sub-category</option>'; 
+                            while($while_products_cat_sub = mysqli_fetch_array($products_cat_select_sub)){
+                                echo '<option value="'.$while_products_cat_sub['id_sub_categories'].'">'.$while_products_cat_sub['products_categories_name'].'</option>';
 
-                    }
+
+                            } 
+                        }else{
+                            while($while_products_cat_sub = mysqli_fetch_array($products_cat_select_sub)){
+
+                                $selected = ($while_products_cat_sub['id_sub_categories'] == $real_sub_categories)?'selected="selected"':'';
+                            
+                                echo '<option value="'.$while_products_cat_sub['id_sub_categories'].'" '.$selected.'>'.$while_products_cat_sub['products_categories_name'].'</option>';
+                            }
+
+
+                        }
+
+
+
                 }
                        
                         ?>            
@@ -540,7 +560,7 @@ if(isset ($_POST['products_categories'])){
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label>No of product</label>
+                            <label>Number of product</label>
                             <input class="form-control" type="number" name="inventory"  value="<?php if(isset($_POST['inventory'])){echo $_POST['inventory'];}else{echo $inventory_value;} ?>" min="1">           
                         </div>
 

@@ -20,7 +20,7 @@ if (isset($_POST['code']) && $_POST['code']!=''){
     $image = $row['products_image'];
     $inventory = $row['inventory_value'];
     $inventory_value_prev = $row['inventory_value_prev'];
-    }
+    
     
     $cartArray = array(
         $code=>array(
@@ -34,6 +34,10 @@ if (isset($_POST['code']) && $_POST['code']!=''){
         'inventory_value_prev'=>$inventory_value_prev
         )
     );
+}
+ 
+    
+    
 
     if(empty($_SESSION['shopping_cart'])) {
         $_SESSION['shopping_cart'] = $cartArray;

@@ -22,7 +22,10 @@ if(mysqli_num_rows($query_page_section) == 1){
         }
 
         mysqli_query($connect, "DELETE FROM products WHERE products_id = '".mysqli_real_escape_string ($connect, $_GET['id'])."'") or die(db_conn_error);
-        
+        mysqli_query($connect, "DELETE FROM inventory WHERE inventory_product_id = '".mysqli_real_escape_string ($connect, $_GET['id'])."'") or die(db_conn_error);
+
+
+
         header('Location:'.GEN_WEBSITE.'/shop.php?confirm_delete=1');
         exit();
    
