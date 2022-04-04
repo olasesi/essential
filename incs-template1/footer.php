@@ -78,19 +78,41 @@
              <div class="menu__content">
                 <ul class="menu--mobile">
 
-                <?php
-                    $query_select_products_cat =  mysqli_query($connect, "SELECT products_categories_id, products_categories_name FROM products_categories") or die(db_conn_error);
+                    <?php
+                    $query_select_products_cat =  mysqli_query($connect, "SELECT products_categories_id, products_categories_name FROM products_categories") or die(mysqli_error($connect));
 
-                    while($while_product_cat = mysqli_fetch_array($query_select_products_cat)){
+                    while ($while_product_cat = mysqli_fetch_array($query_select_products_cat)){
+                        echo '<li class="menu-item-has-children has-mega-menu">
+                    <a href="categories.php?id=' . $while_product_cat['products_categories_id'] . '">' . $while_product_cat['products_categories_name'] . '</a>
                     
-                        echo '<li><a href="categories.php?id='.$while_product_cat['products_categories_id'].'">'.$while_product_cat['products_categories_name'].'</a>
-                        </li>';
+                    ';
+    
+                            $query_select_subcategory =  mysqli_query($connect, "SELECT id_sub_categories, id_categories, sub_categories_name FROM sub_categories WHERE id_categories = '" . $while_product_cat['products_categories_id'] . "'") or die(mysqli_error($connect));
+                                
+                        $counting_sub = mysqli_query($connect, "SELECT id_sub_categories FROM sub_categories WHERE id_categories = '" . $while_product_cat['products_categories_id'] . "'") or die(mysqli_error($connect));
+                        if(mysqli_num_rows($counting_sub) > 0 ){
+
+                        echo  '<span class="sub-toggle"></span>';
+                        }
                         
-
-
+                        
+                        echo '<div class="mega-menu"><div class="mega-menu__column">
+                                           
+                        ';
+                        while ($while_subcategory_cat = mysqli_fetch_array($query_select_subcategory)) {
+                            echo '    
+                               
+                                    <h4><a href="sub-categories.php?id=' . $while_subcategory_cat['id_sub_categories'] . '">' . $while_subcategory_cat['sub_categories_name'] . '</a> <h4>
+                                    
+                        ';
+                        }
+                        echo ' 
+                        </div>
+                        </div>  ';
+                    echo'
+                    </li>';
                     }
-
-                ?>
+                    ?>
                     
                     
                 </ul>
