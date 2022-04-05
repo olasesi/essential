@@ -90,9 +90,6 @@ $EMAIL_CUSTOM = "sales@".$website_name.".com.ng";	//Your email address
 
 
 
-
-
-
 function genReference($qtd){
     //Under the string $Caracteres you write all the characters you want to be used to randomly generate the code.
         $Caracteres = 'ABCDEFGHIJKLMOPQRSTUVXWYZ0123456789';
@@ -113,4 +110,12 @@ function genReference($qtd){
 ?>
 <?php 
 define('API', 'Bearer sk_test_4cab8d4d937b1ab5f847c78c0014a2f6a6e3405c');
+?>
+<?php
+$count_rows = mysqli_query($connect, "SELECT products_categories_name FROM products_categories WHERE products_categories_name = 'Uncategorized'") or die(db_conn_error);
+
+if(mysqli_num_rows($count_rows) == 0){
+mysqli_query($connect, "INSERT INTO products_categories (products_categories_name) VALUES ('Uncategorized')") or die(db_conn_error);
+    }
+
 ?>

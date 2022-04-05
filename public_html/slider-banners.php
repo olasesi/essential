@@ -59,6 +59,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit'])){
              $_SESSION['images']['file_name'] = $_FILES['slider_banner']['name'];
              
 
+                
+             $fetch = mysqli_query($connect, "SELECT slider_banner_image FROM slider_banner  WHERE slider_banner_name = '".$slider_banner."'") or die(db_conn_error);
+             while ($fetch_image = mysqli_fetch_array($fetch)) {
+                 if($fetch_image['slider_banner_image'] != 'default.jpg') {
+                    unlink('images/sliders/'.$fetch_image['slider_banner_image']);
+        }
+        }
+
              
              mysqli_query($connect, "UPDATE slider_banner SET slider_banner_image='".$new_name."' WHERE slider_banner_name = '".$slider_banner."'") or die(db_conn_error);
              

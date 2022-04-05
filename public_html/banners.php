@@ -59,8 +59,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit'])){
              $_SESSION['images']['file_name'] = $_FILES['slider_banner']['name'];
              
       
+  
+             $fetch = mysqli_query($connect, "SELECT banner_image FROM banner  WHERE banner_name = '".$slider_banner."'") or die(db_conn_error);
+             while ($fetch_image = mysqli_fetch_array($fetch)) {
+                 if($fetch_image['banner_image'] != 'default.jpg' && $fetch_image['banner_image'] != 'default-1.jpg' && $fetch_image['banner_image'] != 'default-2.jpg' && $fetch_image['banner_image'] != 'default-3.jpg' && $fetch_image['banner_image'] != 'default-4.jpg') {
+                    unlink('images/banners/'.$fetch_image['banner_image']);
+            }
+            }
+              
+
+
+
  
- mysqli_query($connect, "UPDATE banner SET banner_image='".$new_name."' WHERE banner_name = '".$slider_banner."'") or die(db_conn_error);
+            mysqli_query($connect, "UPDATE banner SET banner_image='".$new_name."' WHERE banner_name = '".$slider_banner."'") or die(db_conn_error);
              if (mysqli_affected_rows($connect) == 1) {
              
              $_POST = array();		

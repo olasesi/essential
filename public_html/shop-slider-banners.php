@@ -53,22 +53,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' AND isset($_POST['submit'])){
              $new_name .= ((substr($ext, 0, 1) != '.') ? ".{$ext}" : $ext);
              $dest = "images/shop-sliders/".$new_name;
              
-             if (move_uploaded_file($_FILES['slider_banner']['tmp_name'], $dest)) {
+             if (move_uploaded_file($_FILES['slider_banner']['tmp_name'], $dest)){
              
              $_SESSION['images']['new_name'] = $new_name;
              $_SESSION['images']['file_name'] = $_FILES['slider_banner']['name'];
              
-                echo($new_name);
+             
+             
+             
+             
+             $fetch = mysqli_query($connect, "SELECT shop_slider_image FROM shop_slider_banner  WHERE shop_slider_name = '".$slider_banner."'") or die(db_conn_error);
+             while ($fetch_image = mysqli_fetch_array($fetch)) {
+                 if($fetch_image['shop_slider_image'] != 'default.jpg') {
+                     unlink('images/shop-sliders/'.$fetch_image['shop_slider_image']);
+ }
+}
+              
  
             mysqli_query($connect, "UPDATE shop_slider_banner SET shop_slider_image='".$new_name."' WHERE shop_slider_name = '".$slider_banner."'") or die(db_conn_error);
             if (mysqli_affected_rows($connect) == 1) {
             
+
+              //  
                 $_POST = array();		
                 $_FILES = array();
                     
                 unset($_FILES['slider_banner'], $_SESSION['images']);
-                // header('Location:'.GEN_WEBSITE);
-                // exit();
+                 header('Location:'.GEN_WEBSITE.'/shop.php');
+                 exit();
                 
              
             }
