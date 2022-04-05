@@ -18,8 +18,16 @@ if(mysqli_num_rows($query_page_section) == 1){
 
         while($deleteFolder = mysqli_fetch_array($query_page_section)){
             $deleteImage = $deleteFolder['products_image'];
+           
+           if($deleteImage != 'default.jpg'){
             unlink ('images/products/'.$deleteImage);
+           }
+       
+       
+       
         }
+
+
 
         mysqli_query($connect, "DELETE FROM products WHERE products_id = '".mysqli_real_escape_string ($connect, $_GET['id'])."'") or die(db_conn_error);
         mysqli_query($connect, "DELETE FROM inventory WHERE inventory_product_id = '".mysqli_real_escape_string ($connect, $_GET['id'])."'") or die(db_conn_error);
