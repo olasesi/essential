@@ -16656,6 +16656,10 @@ html:not([dir="rtl"]) .noUi-horizontal .noUi-handle {
 }
 
 @media (max-width: 479px) {
+  .ps-footer__widgets {
+    flex-flow: column;
+  }
+
   .ps-footer__widgets > * {
     max-width: 50%;
     flex-basis: 50%;

@@ -15,7 +15,7 @@ $statement = "products ORDER BY products_id DESC";
 
 
     <div class="ps-page--shop" id="shop-sidebar">
-        <div class="container">
+        <div class="ps-container">
             <div class="ps-layout--shop">
                 <div class="ps-layout__left">
                     
